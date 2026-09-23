@@ -34,3 +34,6 @@ dist-ssr
 # Vercel and secrets
 .vercel
 .env*
+
+# Files saved by the Claude app
+Claude outputs/

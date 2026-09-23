@@ -23,6 +23,7 @@ export function PhotoDemo() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [rows, setRows] = useState(starterRows);
   const [preview, setPreview] = useState<string>();
+  const [extractionPrompt, setExtractionPrompt] = useState("");
   const [status, setStatus] = useState<"ready" | "reading" | "review">("ready");
   const [error, setError] = useState<string>();
 
@@ -41,7 +42,13 @@ export function PhotoDemo() {
     const dataUrl = await fileToDataUrl(file);
     setPreview(dataUrl);
     try {
-      const result = await extractAttendance({ data: { dataUrl, mimeType: file.type as "image/jpeg" | "image/png" | "image/webp" } });
+      const result = await extractAttendance({
+        data: {
+          dataUrl,
+          mimeType: file.type as "image/jpeg" | "image/png" | "image/webp",
+          prompt: extractionPrompt.trim() || undefined,
+        },
+      });
       setRows(result.records);
       setStatus("review");
     } catch (caught) {
@@ -77,6 +84,17 @@ export function PhotoDemo() {
             {starterRows.map((row) => <div key={row.name}><b>{row.name}</b><i>{row.signed ? "✓" : "—"}</i></div>)}
           </div>
         )}
+        <label className="extraction-request">
+          <span>What should we look for? <small>Optional</small></span>
+          <textarea
+            value={extractionPrompt}
+            onChange={(event) => setExtractionPrompt(event.target.value)}
+            placeholder="tell us what data you want extracted"
+            maxLength={500}
+            rows={3}
+            disabled={status === "reading"}
+          />
+        </label>
         <input ref={inputRef} className="sr-only" type="file" accept="image/jpeg,image/png,image/webp" onChange={(event) => void handleFile(event.target.files?.[0])} />
         <Button variant="outline" size="lg" onClick={() => inputRef.current?.click()} disabled={status === "reading"}>
           <Upload aria-hidden="true" /> {status === "reading" ? "Reading your photo…" : "Choose a photo"}

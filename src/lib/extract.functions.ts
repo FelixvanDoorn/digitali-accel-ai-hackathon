@@ -4,6 +4,7 @@ import { z } from "zod";
 const inputSchema = z.object({
   dataUrl: z.string().max(9_500_000),
   mimeType: z.enum(["image/jpeg", "image/png", "image/webp"]),
+  prompt: z.string().trim().max(500).optional(),
 });
 
 const recordSchema = z.object({
@@ -27,6 +28,10 @@ export const extractAttendance = createServerFn({ method: "POST" })
       throw new Error("The uploaded photo format does not match its contents.");
     }
 
+    const extractionRequest = data.prompt
+      ? ` The user specifically wants: ${data.prompt}. Use this only to guide what you prioritize; do not invent values.`
+      : "";
+
     const response = await fetch("https://api.tokenfactory.nebius.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -42,7 +47,7 @@ export const extractAttendance = createServerFn({ method: "POST" })
             content: [
               {
                 type: "text",
-                text: "Read this attendance sheet. Return every visible person as structured data. Use an empty string for missing text. Set signed to true only when a signature or clear mark is present. Put uncertain field names in lowConfidence. Never invent values.",
+                text: `Read this attendance sheet. Return every visible person as structured data. Use an empty string for missing text. Set signed to true only when a signature or clear mark is present. Put uncertain field names in lowConfidence. Never invent values.${extractionRequest}`,
               },
               { type: "image_url", image_url: { url: data.dataUrl } },
             ],
