@@ -14,7 +14,7 @@ type EngineResponse = {
 function twiml(text: string) {
   const escaped = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   return new Response(`<?xml version="1.0" encoding="UTF-8"?><Response><Message>${escaped}</Message></Response>`, {
-    headers: { "Content-Type": "text/xml; charset=utf-8" },
+    headers: { "Content-Type": "text/xml" },
   });
 }
 
@@ -76,8 +76,9 @@ async function downloadMedia(mediaUrl: string) {
 }
 
 async function handle(params: Params) {
-  const accountSid = process.env["TWILIO_ACCOUNT_SID"];
-  if (accountSid && params.get("AccountSid") !== accountSid) return new Response("Forbidden", { status: 403 });
+  // Log every call so Vercel logs show what Twilio sent. The Tryout number is shared by Twilio, so its
+  // AccountSid may not be ours; we log a mismatch instead of refusing, since a refusal gives Twilio error 12300.
+  console.log(`WA-IN sid=${String(params.get("AccountSid"))} media=${String(params.get("NumMedia"))} body=${String(params.get("Body") ?? "").slice(0, 40)}`);
 
   const numMedia = Number(params.get("NumMedia") ?? 0);
   const mediaUrl = params.get("MediaUrl0");
