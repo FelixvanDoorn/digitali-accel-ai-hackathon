@@ -7,6 +7,7 @@ from fastapi.testclient import TestClient
 from PIL import Image
 
 import app.main
+import app.storage
 import app.prompts
 import app.vision
 from app.config import ConfigError, check_model_config, nebius_api_key, settings
@@ -25,6 +26,8 @@ def configured(monkeypatch, tmp_path):
     monkeypatch.setattr(settings, "vision_model", "test-model")
     monkeypatch.setattr(settings, "save_uploads_dir", None)
     monkeypatch.setattr(settings, "engine_api_key", "")
+    monkeypatch.setattr(settings, "supabase_url", "")
+    monkeypatch.setattr(settings, "supabase_service_role_key", "")
 
 
 @pytest.fixture(autouse=True)
@@ -349,3 +352,58 @@ def test_attendance_template_loads():
     t = app.main.templates["attendance"]
     assert set(t.schema_["properties"]) == {"name", "role", "phone", "signed"}
     assert "Phone number exactly as written" in app.vision.system_prompt(t)
+
+
+# --- saving to Supabase ---
+
+
+@pytest.fixture
+def supabase(monkeypatch):
+    """Configures Supabase and records the calls instead of sending them."""
+    monkeypatch.setattr(settings, "supabase_url", "https://db.example")
+    monkeypatch.setattr(settings, "supabase_service_role_key", "service-key")
+    calls = []
+
+    def post(url, json, headers, timeout):
+        calls.append({"url": url, "json": json, "headers": headers})
+        return SimpleNamespace(raise_for_status=lambda: None, json=lambda: "upload-1")
+
+    monkeypatch.setattr(app.storage.httpx, "post", post)
+    return calls
+
+
+def test_extract_without_supabase_saves_nothing(fake_model):
+    assert post(make_image()).json()["meta"]["upload_id"] is None
+
+
+def test_extract_saves_upload_and_records(fake_model, supabase):
+    fake_model["result"] = [{"id": 1042, "signed": True, "amount": 1380}, {"id": 1043, "signed": None, "amount": 5}]
+    res = post(make_image(), instructions="Amounts in euros")
+    assert res.json()["meta"]["upload_id"] == "upload-1"
+
+    [call] = supabase
+    assert call["url"] == "https://db.example/rest/v1/rpc/save_upload"
+    assert call["headers"]["Authorization"] == "Bearer service-key"
+    upload, records = call["json"]["p_upload"], call["json"]["p_records"]
+    assert upload["template_id"] == "delivery-note"
+    assert upload["source"] == "api"
+    assert upload["instructions"] == "Amounts in euros"
+    assert upload["image_format"] == "JPEG"
+    assert (upload["record_count"], upload["flag_count"]) == (2, 1)
+    assert records[0] == {"data": {"id": 1042, "signed": True, "amount": 1380}, "flags": []}
+    assert records[1]["flags"] == [{"field": "signed", "reason": "unreadable"}]
+
+
+def test_extract_still_succeeds_when_saving_fails(fake_model, supabase, monkeypatch):
+    def fail(*args, **kwargs):
+        raise app.storage.httpx.ConnectError("unreachable")
+
+    monkeypatch.setattr(app.storage.httpx, "post", fail)
+    res = post(make_image())
+    assert res.status_code == 200
+    assert res.json()["meta"]["upload_id"] is None
+
+
+def test_extract_rejects_unknown_source():
+    files = {"image": ("photo.jpg", make_image(), "image/jpeg")}
+    assert client.post("/extract", files=files, data={"template_id": "delivery-note", "source": "x"}).status_code == 422

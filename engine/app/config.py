@@ -28,6 +28,9 @@ class Settings(BaseSettings):
     allowed_origin_regex: str | None = None
     # If set, /extract requires this value in the X-API-Key header (e.g. from the website's server).
     engine_api_key: str = ""
+    # Supabase, set by the Vercel integration. Empty means uploads are not saved.
+    supabase_url: str = ""
+    supabase_service_role_key: str = ""
     templates_dir: Path = _shared_dir("templates")
     prompts_dir: Path = _shared_dir("prompts")
     # Empty means photos are never stored. Set a folder to keep uploads (e.g. for building the eval set).
