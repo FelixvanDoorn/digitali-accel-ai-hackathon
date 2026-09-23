@@ -31,9 +31,30 @@ dist-ssr
 *.sln
 *.sw?
 
-# Vercel and secrets
+# Vercel and secrets: never commit API keys (e.g. nebius_token.env, engine/.env)
 .vercel
 .env*
+*.env
+!.env.example
+!*.env.example
+
+# Python (engine/, eval/, test-data/)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# Local runs and saved uploads
+engine/uploads/
+eval/results/
 
 # Files saved by the Claude app
 Claude outputs/
