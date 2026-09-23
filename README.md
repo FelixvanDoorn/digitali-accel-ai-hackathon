@@ -19,3 +19,14 @@ Companies can use Digitali in two ways: call the engine from their own system (A
 3. Engine (API endpoint): to follow.
 
 Built for the Accel AI Hackathon.
+
+## Development
+
+The site is a TanStack Start app (built in Lovable), deployed on Vercel.
+
+```
+npm install
+npm run dev
+```
+
+The photo demo needs `NEBIUS_API_KEY` set as an environment variable (locally in `.env.local`, on Vercel under Project Settings, Environment Variables). The pitch deck lives in `public/pitch-deck/index.html`.
