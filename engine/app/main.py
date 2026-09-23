@@ -1,11 +1,12 @@
 import json
 import logging
+import secrets
 import time
 import uuid
 from contextlib import asynccontextmanager
 from typing import Any
 
-from fastapi import FastAPI, Form, HTTPException, UploadFile
+from fastapi import FastAPI, Form, Header, HTTPException, UploadFile
 from fastapi.concurrency import run_in_threadpool
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -108,9 +109,15 @@ def list_templates() -> list[TemplateSummary]:
 
 @app.post("/extract")
 async def extract(
-    image: UploadFile, template_id: str = Form(...), instructions: str | None = Form(None)
+    image: UploadFile,
+    template_id: str = Form(...),
+    instructions: str | None = Form(None),
+    x_api_key: str | None = Header(None),
 ) -> ExtractResponse:
     started = time.perf_counter()
+
+    if settings.engine_api_key and not secrets.compare_digest(x_api_key or "", settings.engine_api_key):
+        raise HTTPException(401, "Missing or wrong X-API-Key")
 
     template = templates.get(template_id)
     if template is None:

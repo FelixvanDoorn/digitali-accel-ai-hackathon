@@ -1,8 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
+// The browser shrinks photos before upload (see photo-demo.tsx), so this stays well under Vercel's
+// ~4.5 MB request body limit for server functions.
 const inputSchema = z.object({
-  dataUrl: z.string().max(9_500_000),
+  dataUrl: z.string().max(4_000_000),
   mimeType: z.enum(["image/jpeg", "image/png", "image/webp"]),
   prompt: z.string().trim().max(500).optional(),
 });
@@ -27,7 +29,20 @@ type EngineResponse = {
 
 const FIELDS = ["name", "role", "phone", "signed"] as const;
 
-async function extractViaEngine(engineUrl: string, data: z.infer<typeof inputSchema>, prompt?: string) {
+function engineError(status: number) {
+  if (status === 401) return "The photo reader is not configured correctly.";
+  if (status === 413 || status === 415)
+    return "We could not use that photo. Please try a JPG or PNG photo.";
+  if (status === 422) return "Your note is too long. Please shorten it and try again.";
+  if (status === 503) return "The photo reader is not configured yet.";
+  return `The photo could not be read (${status}). Please try again.`;
+}
+
+async function extractViaEngine(
+  engineUrl: string,
+  data: z.infer<typeof inputSchema>,
+  prompt?: string,
+) {
   const base64 = data.dataUrl.slice(data.dataUrl.indexOf(",") + 1);
   const bytes = Uint8Array.from(Buffer.from(base64, "base64"));
   const form = new FormData();
@@ -39,15 +54,28 @@ async function extractViaEngine(engineUrl: string, data: z.infer<typeof inputSch
   const key = process.env["ENGINE_API_KEY"];
   if (key) headers["x-api-key"] = key;
 
-  const response = await fetch(`${engineUrl.replace(/\/$/, "")}/extract`, { method: "POST", headers, body: form });
+  let response: Response;
+  try {
+    response = await fetch(`${engineUrl.replace(/\/$/, "")}/extract`, {
+      method: "POST",
+      headers,
+      body: form,
+      signal: AbortSignal.timeout(60_000),
+    });
+  } catch (caught) {
+    console.error("Engine request failed:", caught);
+    throw new Error("The photo reader is offline right now. Please try again later.");
+  }
   if (!response.ok) {
     const detail = await response.text();
     console.error(`Engine request failed [${response.status}]: ${detail}`);
-    throw new Error(`The photo could not be read (${response.status}). Please try again.`);
+    throw new Error(engineError(response.status));
   }
   const payload = (await response.json()) as EngineResponse;
   const records = (payload.records ?? []).slice(0, 50).map((raw, index) => {
-    const flagged = new Set((payload.flags ?? []).filter((f) => f.record === index).map((f) => f.field));
+    const flagged = new Set(
+      (payload.flags ?? []).filter((f) => f.record === index).map((f) => f.field),
+    );
     const text = (field: "name" | "role" | "phone") => {
       const value = raw[field];
       if (value === null || value === undefined || /^\s*(null|none|n\/a)?\s*$/i.test(String(value))) {
@@ -155,7 +183,9 @@ export const extractAttendance = createServerFn({ method: "POST" })
       throw new Error(`The photo could not be read (${response.status}). Please try again.`);
     }
 
-    const payload = (await response.json()) as { choices?: Array<{ message?: { content?: string } }> };
+    const payload = (await response.json()) as {
+      choices?: Array<{ message?: { content?: string } }>;
+    };
     const content = payload.choices?.[0]?.message?.content;
     if (!content) throw new Error("The photo reader returned no records.");
     return resultSchema.parse({ ...JSON.parse(content), source: "Read directly by Qwen2.5-VL-72B on Nebius Token Factory" });

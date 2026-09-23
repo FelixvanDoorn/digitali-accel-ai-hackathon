@@ -29,4 +29,4 @@ npm install
 npm run dev
 ```
 
-The photo demo needs `NEBIUS_API_KEY` set as an environment variable (locally in `.env.local`, on Vercel under Project Settings, Environment Variables). The pitch deck lives in `public/pitch-deck/index.html`.
+The photo demo sends photos to the engine (`engine/`) when `ENGINE_URL` (the engine's address) and `ENGINE_API_KEY` (same value as the engine's) are set as environment variables: locally in `.env.local`, on Vercel under Project Settings, Environment Variables. Without `ENGINE_URL` it falls back to calling Nebius directly with `NEBIUS_API_KEY`. To run the engine on a laptop behind a tunnel, use `engine/scripts/tunnel.sh`, which can set both on Vercel for you. The pitch deck lives in `public/pitch-deck/index.html`.

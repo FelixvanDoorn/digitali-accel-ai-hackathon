@@ -24,6 +24,7 @@ def configured(monkeypatch, tmp_path):
     monkeypatch.setattr(settings, "nebius_key_file", tmp_path / "missing.env")
     monkeypatch.setattr(settings, "vision_model", "test-model")
     monkeypatch.setattr(settings, "save_uploads_dir", None)
+    monkeypatch.setattr(settings, "engine_api_key", "")
 
 
 @pytest.fixture(autouse=True)
@@ -330,3 +331,21 @@ def test_enforce_schema_caps_records():
     assert len(app.vision.enforce_schema(many, template())) == app.vision.MAX_RECORDS
     single = template().model_copy(update={"multi_record": False})
     assert len(app.vision.enforce_schema(many, single)) == 1
+
+
+# --- API key ---
+
+
+def test_extract_requires_api_key_when_configured(monkeypatch):
+    monkeypatch.setattr(settings, "engine_api_key", "secret")
+    assert post(make_image()).status_code == 401
+    files = {"image": ("photo.jpg", make_image(), "image/jpeg")}
+    data = {"template_id": "delivery-note"}
+    assert client.post("/extract", files=files, data=data, headers={"X-API-Key": "wrong"}).status_code == 401
+    assert client.post("/extract", files=files, data=data, headers={"X-API-Key": "secret"}).status_code == 200
+
+
+def test_attendance_template_loads():
+    t = app.main.templates["attendance"]
+    assert set(t.schema_["properties"]) == {"name", "role", "phone", "signed"}
+    assert "Phone number exactly as written" in app.vision.system_prompt(t)
