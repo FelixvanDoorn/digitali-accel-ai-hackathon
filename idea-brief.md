@@ -17,7 +17,7 @@ Digitali is the place a company goes to turn its analogue operations into struct
 
 A pipeline with three parts: input, engine, output.
 
-1. **Input (accepts anything).** A photo or scan of whatever the operation already produces: forms, sheets, notes, receipts, site photos. Web upload for the MVP; messaging apps and email later.
+1. **Input (accepts anything, through tools staff already have).** A photo or scan of whatever the operation already produces: forms, sheets, notes, receipts, site photos. Staff send it through WhatsApp or other channels already on their phones (email, Telegram, web upload). No new app to install, so training and adoption costs are close to zero.
 2. **Engine.** A vision model on Nebius Token Factory reads the input and maps it to the company's own schema. The prompt carries what to read, any reference data from the company's system (for example the list of valid IDs to match against), and the exact output format.
 3. **Output (structured data).** Validated JSON per record, for example `{"id": 1042, "signed": true, "amount": 1380}`, ready to write into the company's system or export.
 
@@ -26,15 +26,18 @@ Two ways to use it:
 1. **Integration.** A company calls the engine from its own system: image and schema in, JSON out.
 2. **Our tools.** A company without integration uses our web page for input and output: upload, review and correct the extracted table, export.
 
-Setup should be easy: a company defines one template (which fields, which reference list) and can start sending photos the same day.
+Setup should be easy: a company defines one template (which fields, which reference list), connects a WhatsApp number, and staff can start sending photos the same day.
+
+Why messaging channels matter: most failed digitisation projects fail on adoption, not technology. A new app needs devices, logins, training and support. WhatsApp is already on the phones of most frontline staff, who already use it to send photos of paperwork.
 
 ## MVP scope (hackathon)
 
-1. **UI:** one web page with the idea, a live demo (upload a photo of a paper form, see the extracted table, edit, export) and the pitch slides on the same page.
-2. **Backend:** the engine as one API endpoint: image plus template in, validated JSON out.
-3. **Slides:** on the page, covering all six judging criteria.
+1. **Input:** WhatsApp intake if the sandbox can be set up in time, with web upload as the fallback for the demo.
+2. **UI:** one web page with the idea, a live demo (send or upload a photo of a paper form, see the extracted table, edit, export) and the pitch slides on the same page.
+3. **Backend:** the engine as one API endpoint: image plus template in, validated JSON out.
+4. **Slides:** on the page, covering all six judging criteria.
 
-Out of scope for the MVP: messaging app intake, direct writes into client systems, template builder UI.
+Out of scope for the MVP: production WhatsApp Business number, other channels, direct writes into client systems, template builder UI.
 
 ## Models (to confirm on Token Factory)
 

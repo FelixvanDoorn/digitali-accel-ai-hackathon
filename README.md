@@ -6,7 +6,7 @@ Companies with large paper based operations want data driven decisions but strug
 
 ## How it works
 
-1. **Input:** a photo of any paper form, sheet or log (web upload for the MVP, messaging apps later).
+1. **Input:** a photo of any paper form, sheet or log, sent through WhatsApp or other tools staff already have. No new app, so almost no training or adoption burden.
 2. **Engine:** an open vision model on Nebius Token Factory, prompted with the company's template, reference data and the exact output format.
 3. **Output:** validated JSON per record, for example `{"id": 1042, "signed": true, "amount": 1380}`.
 
