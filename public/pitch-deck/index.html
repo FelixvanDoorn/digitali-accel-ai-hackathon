@@ -45,6 +45,24 @@ h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:400;letter-spacing:-.0
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
 .tags span{border:1px solid var(--mkaa);border-radius:999px;padding:6px 14px;font-size:17px}
 .arrow{display:flex;align-items:center;justify-content:center;color:var(--mwani);font-size:40px}
+/* pipeline v2 */
+.pipe{display:grid;grid-template-columns:1fr 110px 1.15fr 110px 1fr;margin-top:56px;flex:1;max-height:520px}
+.pipe .col{display:flex;flex-direction:column}
+.colhead{font-size:14px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding-bottom:12px;border-bottom:1px solid var(--mkaa)}
+.pipe .list{flex:1;display:grid;grid-template-rows:repeat(5,1fr)}
+.pipe .list span{display:flex;align-items:center;font-family:"Fraunces",serif;font-size:30px;border-bottom:1px solid var(--hairline)}
+.fan{width:100%;height:calc(100% - 37px);margin-top:37px;align-self:stretch}
+.fan line{stroke:var(--mwani);stroke-width:1.5;vector-effect:non-scaling-stroke;opacity:.55}
+.enginecol{display:flex;flex-direction:column;padding-top:37px}
+.engine{flex:1;background:var(--mwani);color:var(--chokaa);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;border-radius:220px 220px 0 0;padding:40px 30px 30px}
+.emark{width:54px;height:70px}
+.ename{font-family:"Fraunces",serif;font-size:42px}
+.esteps{display:flex;gap:10px}
+.esteps span{border:1px solid color-mix(in srgb,var(--chokaa) 60%,transparent);border-radius:999px;padding:5px 14px;font-size:16px}
+.link{width:2px;height:26px;background:var(--mkaa);margin:0 auto}
+.nebius{align-self:center;width:72%;border:1px solid var(--mkaa);background:#EBE2D2;padding:12px 16px;text-align:center;display:flex;flex-direction:column;gap:2px}
+.nebius b{font-weight:600;font-size:18px}
+.nebius span{font-size:15px;color:var(--muted)}
 /* table */
 table{width:100%;border-collapse:collapse;font-size:26px;margin-top:56px}
 th{text-align:left;font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:0 18px 16px;border-bottom:1px solid var(--mkaa)}
@@ -174,19 +192,33 @@ aside.notes{display:none}
 </section>
 
 <!-- 7 PRODUCT -->
-<section class="slide" data-crit="">
+<section class="slide">
   <div class="center">
     <div class="label">The product</div>
     <h2 class="big" style="font-size:64px">Any input in. Structured data out.</h2>
-    <div class="flow">
-      <div class="step"><div class="n">01</div><h3>Any input</h3><p>Forms, notes, receipts, scans.</p><div class="thumb" style="background-image:url('/images/sample-sheet.jpg');background-position:center 20%"></div></div>
-      <div class="arrow">→</div>
-      <div class="step mid"><div class="n">02</div><h3>Open models</h3><p>Vision models on Nebius Token Factory read it against the organisation's own template.</p></div>
-      <div class="arrow">→</div>
-      <div class="step"><div class="n">03</div><h3>Structured data</h3><p>Checked by a person, ready to use.</p><div class="tags"><span>Tables</span><span>JSON</span><span>API</span><span>Databases</span><span>Dashboards</span><span>Analytics</span></div></div>
+    <div class="pipe">
+      <div class="col">
+        <div class="colhead">Input</div>
+        <div class="list"><span>WhatsApp</span><span>Telegram</span><span>Your own app</span><span>Web upload</span><span>Email</span></div>
+      </div>
+      <svg class="fan" viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="10" x2="100" y2="50"/><line x1="0" y1="30" x2="100" y2="50"/><line x1="0" y1="50" x2="100" y2="50"/><line x1="0" y1="70" x2="100" y2="50"/><line x1="0" y1="90" x2="100" y2="50"/></svg>
+      <div class="enginecol">
+        <div class="engine">
+          <svg class="emark" viewBox="0 0 1400 1800"><path d="M200,1600 L200,700 A500,500 0 0 1 1200,700 L1200,1600 Z" fill="#F4EEE3"/><path d="M700,732 C760,900 900,972 900,1092 A200,200 0 0 1 500,1092 C500,972 640,900 700,732 Z" fill="#E0A62B"/></svg>
+          <div class="ename">Digitali engine</div>
+          <div class="esteps"><span>Read</span><span>Check</span><span>Structure</span></div>
+        </div>
+        <div class="link"></div>
+        <div class="nebius"><b>Nebius Token Factory</b><span>Open vision models</span></div>
+      </div>
+      <svg class="fan" viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="50" x2="100" y2="10"/><line x1="0" y1="50" x2="100" y2="30"/><line x1="0" y1="50" x2="100" y2="50"/><line x1="0" y1="50" x2="100" y2="70"/><line x1="0" y1="50" x2="100" y2="90"/></svg>
+      <div class="col">
+        <div class="colhead">Output</div>
+        <div class="list"><span>Spreadsheets</span><span>JSON / API</span><span>Your database</span><span>Dashboards</span><span>Reports</span></div>
+      </div>
     </div>
   </div>
-  <aside class="notes">One engine, many document types: each organisation defines a template (fields plus reference lists). Output goes wherever they need it: a spreadsheet, their own system through the API, or a dashboard.</aside>
+  <aside class="notes">Inputs come from wherever staff already are: WhatsApp, Telegram, the organisation's own app, web upload or email. The Digitali engine is the product: it reads the document against the organisation's template, checks it against their reference lists, and structures it. The AI itself runs on open vision models on Nebius Token Factory. Output goes wherever it is needed: spreadsheets, their own systems through the API, a database, dashboards and reports.</aside>
 </section>
 
 <!-- 8 DEMO -->
