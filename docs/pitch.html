@@ -9,76 +9,67 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--chokaa:#F4EEE3;--mchanga:#D8C6A5;--mkaa:#2B2622;--mwani:#2F5D43;--manjano:#E0A62B;--bahari:#6FB3A8;--hina:#B4552F;--hairline:#E3D8C6;--soft:#4A423B;--muted:#6A5F55;--panel:#EBE2D2}
+:root{--chokaa:#F4EEE3;--mchanga:#D8C6A5;--mkaa:#2B2622;--mwani:#2F5D43;--manjano:#E0A62B;--hina:#B4552F;--hairline:#E3D8C6;--soft:#4A423B;--muted:#6A5F55}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:#E9E1D3;font-family:"Work Sans",system-ui,sans-serif;color:var(--mkaa);overflow:hidden}
 #viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
 #stage{width:1600px;height:900px;position:relative;transform-origin:center center;flex:none}
-.slide{position:absolute;inset:0;background:var(--chokaa);padding:88px 112px 110px;display:none;flex-direction:column}
-.slide.active{display:flex}
+.slide{position:absolute;inset:0;background:var(--chokaa);display:none}
+.slide.active{display:block}
 .slide.green{background:var(--mwani);color:var(--chokaa)}
-h1,h2,h3,.serif{font-family:"Fraunces",Georgia,serif;font-weight:400;letter-spacing:-.015em}
-.eyebrow{font-size:16px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--mwani);margin-bottom:26px}
-.green .eyebrow{color:var(--manjano)}
-h1{font-size:104px;line-height:1.02}
-h2{font-size:60px;line-height:1.08;max-width:1280px}
-.lead{font-size:28px;line-height:1.5;color:var(--soft);max-width:1100px;margin-top:28px}
-.body{margin-top:52px;flex:1;display:flex;flex-direction:column}
-.cols{display:grid;gap:44px}
-.c2{grid-template-columns:1fr 1fr}.c3{grid-template-columns:repeat(3,1fr)}.c4{grid-template-columns:repeat(4,1fr)}
-.col{border-top:1px solid var(--mkaa);padding-top:26px}
-.col .n{font-family:"Fraunces",serif;color:var(--hina);font-size:24px}
-.col h3{font-size:36px;line-height:1.15;margin:14px 0 12px}
-.col p{font-size:22px;line-height:1.5;color:var(--soft)}
-.panel{background:var(--mchanga);padding:34px 36px}
-.panel.light{background:var(--panel)}
-.panel h3{font-size:34px;margin:12px 0 12px}
-.panel p{font-size:22px;line-height:1.5;color:var(--soft)}
-.panel .n{font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mwani)}
-.flow{display:grid;grid-template-columns:1fr 56px 1fr 56px 1fr;align-items:stretch}
-.arrow{display:flex;align-items:center;justify-content:center;color:var(--mwani);font-size:34px}
-.json{background:var(--chokaa);border:1px solid var(--hairline);padding:16px 18px;font-size:19px;margin-top:16px;line-height:1.55;color:var(--mkaa)}
-ul.list{list-style:none;border-top:1px solid var(--mkaa)}
-ul.list li{font-size:25px;line-height:1.45;padding:20px 0;border-bottom:1px solid var(--hairline);color:var(--soft)}
-ul.list b{color:var(--mkaa);font-weight:600}
-.gain{border-top:1px solid var(--hairline);padding-top:18px}
-.gain h3{font-size:28px;margin-bottom:6px}
-.gain p{font-size:19px;color:var(--soft);line-height:1.45}
-table{width:100%;border-collapse:collapse;font-size:24px}
+h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:400;letter-spacing:-.015em}
+.label{font-size:17px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--mwani)}
+.green .label{color:var(--manjano)}
+.big{font-family:"Fraunces",serif;font-size:76px;line-height:1.05;letter-spacing:-.02em}
+.sub{font-size:28px;line-height:1.45;color:var(--soft);margin-top:26px}
+.green .sub{color:color-mix(in srgb,var(--chokaa) 80%,transparent)}
+/* split layout: text left, photo right */
+.split{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr}
+.split .text{padding:0 80px 0 112px;display:flex;flex-direction:column;justify-content:center;gap:0}
+.split .text .label{margin-bottom:30px}
+.photo{background-color:var(--mchanga);background-size:cover;background-position:center}
+.arch{border-radius:999px 999px 0 0}
+.photo-pad{padding:90px 112px 0 20px;display:flex;align-items:flex-end}
+.photo-pad .photo{width:100%;height:100%}
+/* centered layout */
+.center{position:absolute;inset:0;padding:96px 112px 120px;display:flex;flex-direction:column}
+.center .label{margin-bottom:26px}
+/* pipeline */
+.flow{display:grid;grid-template-columns:1fr 70px 1fr 70px 1fr;margin-top:64px;flex:1;max-height:470px}
+.step{background:#EBE2D2;padding:40px 38px;display:flex;flex-direction:column}
+.step.mid{background:var(--mchanga)}
+.step .n{font-family:"Fraunces",serif;color:var(--hina);font-size:24px}
+.step h3{font-size:44px;margin:12px 0 18px}
+.step p{font-size:22px;line-height:1.5;color:var(--soft)}
+.step .thumb{margin-top:auto;height:150px;background-size:cover;background-position:center}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.tags span{border:1px solid var(--mkaa);border-radius:999px;padding:6px 14px;font-size:17px}
+.arrow{display:flex;align-items:center;justify-content:center;color:var(--mwani);font-size:40px}
+/* table */
+table{width:100%;border-collapse:collapse;font-size:26px;margin-top:56px}
 th{text-align:left;font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:0 18px 16px;border-bottom:1px solid var(--mkaa)}
-td{padding:22px 18px;border-bottom:1px solid var(--hairline);color:var(--soft)}
+td{padding:24px 18px;border-bottom:1px solid var(--hairline);color:var(--soft)}
 td:first-child{color:var(--mkaa)}
 tr.win td{background:color-mix(in srgb,var(--mwani) 10%,transparent)}
 .tbd{background:color-mix(in srgb,var(--manjano) 28%,transparent);border-bottom:2px solid var(--manjano);padding:0 8px;color:var(--mkaa);font-weight:500;font-size:.92em}
-.chips{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
-.chip{border:1px solid var(--mkaa);border-radius:999px;padding:8px 20px;font-size:17px;font-weight:500}
-.chip.fill{background:var(--mwani);border-color:var(--mwani);color:var(--chokaa)}
-/* kanga saying */
-.kanga{padding:6px;border:2px solid var(--mwani);text-align:center;max-width:760px}
-.kanga .in{padding:14px 20px;border:1px solid var(--mwani);font-size:20px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
-.drops{display:flex;justify-content:center;gap:22px;padding:6px 0}
-.drops svg{width:9px;height:13px;fill:var(--manjano)}
-.kanga p{padding:6px 0 2px;font-size:15px;color:var(--muted)}
-.green .kanga,.green .kanga .in{border-color:var(--chokaa)}
-.green .kanga p{color:color-mix(in srgb,var(--chokaa) 75%,transparent)}
-/* arch */
-.arch{background:var(--mchanga);border-radius:999px 999px 0 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;text-align:center;color:var(--soft)}
-.arch svg{width:120px}
+.note{font-size:20px;color:var(--muted);margin-top:auto;line-height:1.5}
 /* wordmark */
-.wm{font-family:"Fraunces",serif;font-weight:500;line-height:1;letter-spacing:0;white-space:nowrap}
+.wm{font-family:"Fraunces",serif;font-weight:500;line-height:1;white-space:nowrap}
 .wm .i{position:relative;display:inline-block}
 .wm .i svg{position:absolute;left:50%;top:.02em;width:.15em;height:.2em;transform:translateX(-50%);fill:var(--manjano);overflow:visible}
 .lockup{display:inline-flex;align-items:flex-end;gap:.3em}
 .lockup .mk{height:1em;width:.78em}
+/* team */
+.team{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:60px}
+.avatar{width:110px;height:138px;border-radius:999px 999px 0 0;background:var(--chokaa);display:flex;align-items:center;justify-content:center;font-family:"Fraunces",serif;font-size:52px;color:var(--mwani);margin-bottom:20px}
+.team h3{font-size:38px}.team p{font-size:19px;opacity:.8;margin-top:4px}
 /* chrome */
-.crit{position:absolute;left:112px;bottom:44px;font-size:15px;color:var(--muted);letter-spacing:.02em}
-.crit b{color:var(--mwani);font-weight:600}
 .foot{position:absolute;right:112px;bottom:40px;display:flex;align-items:center;gap:22px;font-size:15px;color:var(--muted);font-variant-numeric:tabular-nums}
-.foot .wm{font-size:26px;color:var(--mkaa)}
-.green .foot,.green .crit{color:color-mix(in srgb,var(--chokaa) 70%,transparent)}
+.foot .wm{font-size:24px;color:var(--mkaa)}
+.on-photo .foot{right:auto;left:112px}
+.green .foot{color:color-mix(in srgb,var(--chokaa) 70%,transparent)}
 .green .foot .wm{color:var(--chokaa)}
-.title .foot .wm{display:none}
-.avatar{width:120px;height:150px;border-radius:999px 999px 0 0;background:var(--chokaa);display:flex;align-items:center;justify-content:center;font-family:"Fraunces",serif;font-size:56px;color:var(--mwani);margin-bottom:22px}
+.credit{position:fixed;right:160px;bottom:18px;font-size:11px;color:var(--muted);opacity:.7}
 aside.notes{display:none}
 #notes{position:fixed;left:0;right:0;bottom:0;background:var(--mkaa);color:var(--chokaa);font-size:15px;line-height:1.5;padding:14px 20px;display:none;max-height:30vh;overflow:auto;z-index:5}
 #nav{position:fixed;right:16px;bottom:12px;display:flex;gap:6px;z-index:6}
@@ -95,188 +86,189 @@ aside.notes{display:none}
 <div id="viewport"><div id="stage">
 
 <!-- 1 TITLE -->
-<section class="slide title" data-crit="">
-  <div style="flex:1;display:grid;grid-template-columns:1.25fr .75fr;gap:90px;align-items:center">
-    <div>
-      <div class="eyebrow">Karibu · Accel AI Hackathon · Nebius Token Factory</div>
-      <div class="lockup" style="font-size:118px"><svg class="mk"><use href="#mark"/></svg><span class="wm" data-wm></span></div>
-      <h1 style="font-size:66px;margin-top:48px">Less admin. More impact.</h1>
-      <p class="lead" style="margin-top:18px">Data driven decisions for organisations in the field.</p>
-      <p class="lead" style="font-size:22px;margin-top:40px;color:var(--muted)">Finn · Felix · Elif</p>
+<section class="slide on-photo" data-crit="">
+  <div class="split">
+    <div class="text">
+      <div class="lockup" style="font-size:120px"><svg class="mk"><use href="#mark"/></svg><span class="wm" data-wm></span></div>
+      <h1 class="big" style="margin-top:56px;font-size:68px">Less admin.<br>More impact.</h1>
+      <p class="sub" style="font-size:22px;color:var(--muted);margin-top:40px">Accel AI Hackathon · Nebius Token Factory</p>
     </div>
-    <div class="arch" style="height:620px"><svg viewBox="0 0 1400 1800" style="width:110px"><use href="#mark"/></svg><p style="font-size:18px;max-width:280px">Kutoka karatasi hadi data<br><span style="font-size:15px;color:var(--muted)">From paper to data</span></p></div>
+    <div class="photo-pad"><div class="photo arch" data-img="group" data-pos="center 30%"></div></div>
   </div>
-  <aside class="notes">Open with the people, not the tech. Field organisations exist to help people, but their staff lose hours to admin and their managers decide without data. Digitali takes the admin away and gives them the data.</aside>
+  <aside class="notes">One line: Digitali gives field organisations their time back and their data forward. Then go straight to Asha.</aside>
 </section>
 
-<!-- 2 PROBLEM -->
-<section class="slide" data-crit="Problem and company potential">
-  <div class="eyebrow">The problem</div>
-  <h2>Field organisations exist to help people. Too much of their time goes to admin.</h2>
-  <div class="body">
-    <div class="cols c3">
-      <div class="col"><div class="n">Every day</div><h3>Paper forms</h3><p>Field staff record meetings, attendance, payments and visits on paper, in notebooks and in WhatsApp chats.</p></div>
-      <div class="col"><div class="n">Every week</div><h3>Retyped by hand</h3><p>Staff copy it all into spreadsheets by hand. Hours that should go to the people they serve.</p></div>
-      <div class="col"><div class="n">Every month</div><h3>Decisions late</h3><p>Without a database, managers decide on gut feeling. Weeks later, if the data arrives at all.</p></div>
+<!-- 2 USER -->
+<section class="slide on-photo">
+  <div class="split">
+    <div class="text">
+      <div class="label">The user</div>
+      <h2 class="big">Meet Asha.</h2>
+      <p class="sub">Field officer in western Kenya.<br>She supports 12 community groups.</p>
     </div>
-    <p class="lead" style="margin-top:auto">New apps and tablets fail on cost, training and adoption. So the paper stays, and the decisions stay blind.</p>
+    <div class="photo" data-img="portrait" data-pos="center 35%"></div>
   </div>
-  <aside class="notes">Field heavy organisations: NGOs, cooperatives, microfinance, public services. The bottleneck is data input, not analytics.</aside>
+  <aside class="notes">Asha is a persona based on field officers at microfinance institutions, cooperatives and NGOs. She visits groups, runs meetings and records everything on paper.</aside>
 </section>
 
 <!-- 3 USER -->
-<section class="slide" data-crit="Product and user value">
-  <div class="eyebrow">The user</div>
-  <h2>Less admin for the field officer. Better decisions for the manager.</h2>
-  <div class="body">
-    <div class="cols c2" style="gap:80px">
-      <ul class="list">
-        <li><b>How often:</b> after every meeting or visit, several times a week per officer.</li>
-        <li><b>Today:</b> paper to office, then manual entry, then a spreadsheet.</li>
-        <li><b>Would they pay:</b> they already pay for data entry, in staff hours taken away from the field.</li>
-      </ul>
-      <div class="cols c2" style="gap:30px 36px;align-content:start">
-        <div class="gain"><h3>No more retyping</h3><p>Data entry disappears.</p></div>
-        <div class="gain"><h3>Instant receipt</h3><p>The officer gets a summary back: who paid, who is missing.</p></div>
-        <div class="gain"><h3>Fewer disputes</h3><p>A timestamped record settles "I paid".</p></div>
-        <div class="gain"><h3>Same day numbers</h3><p>Managers see results the day they happen.</p></div>
-      </div>
+<section class="slide on-photo">
+  <div class="split">
+    <div class="text">
+      <div class="label">The user</div>
+      <h2 class="big">Every meeting ends on paper.</h2>
+      <p class="sub">Attendance, savings, loans, visits.<br>Signed, stamped, filed.</p>
+    </div>
+    <div style="display:grid;grid-template-rows:1fr 1fr">
+      <div class="photo" data-img="meeting" data-pos="center 40%"></div>
+      <div class="photo" style="background-image:url('/images/sample-sheet.jpg');background-position:center 22%"></div>
     </div>
   </div>
-  <aside class="notes">The officer must gain something, or the photos stop in week three. The receipt and dispute record are the officer's reasons; same day numbers are the manager's.</aside>
+  <aside class="notes">The paper works in the field. No battery, no signal, everyone can sign. The problem starts after the meeting.</aside>
 </section>
 
-<!-- 4 PRODUCT -->
-<section class="slide" data-crit="Product and user value">
-  <div class="eyebrow">The product</div>
-  <h2>A data collection system that accepts anything staff already produce.</h2>
-  <div class="body">
+<!-- 4 PROBLEM -->
+<section class="slide on-photo">
+  <div class="split">
+    <div class="text">
+      <div class="label">The problem</div>
+      <h2 class="big">Her evenings go to retyping.</h2>
+      <p class="sub">Hours of admin instead of hours with the people she serves.</p>
+    </div>
+    <div class="photo" data-img="night" data-pos="center 40%"></div>
+  </div>
+  <aside class="notes">Every sheet gets copied into a spreadsheet by hand. Slow, full of typos, and it takes her away from the field.</aside>
+</section>
+
+<!-- 5 PROBLEM -->
+<section class="slide on-photo">
+  <div class="split">
+    <div class="text">
+      <div class="label">The problem</div>
+      <h2 class="big">Her manager decides weeks later.</h2>
+      <p class="sub">The data is there. It is just stuck on paper.</p>
+    </div>
+    <div class="photo" data-img="register" data-pos="center"></div>
+  </div>
+  <aside class="notes">Head office sees repayment and attendance weeks late, if at all. Decisions run on gut feeling instead of data.</aside>
+</section>
+
+<!-- 6 SOLUTION -->
+<section class="slide on-photo">
+  <div class="split">
+    <div class="text">
+      <div class="label">The solution</div>
+      <h2 class="big">Asha takes a photo. That's it.</h2>
+      <p class="sub">Digitali turns it into clean, structured data.<br>She checks it and moves on.</p>
+    </div>
+    <div class="photo" data-img="phone" data-pos="center"></div>
+  </div>
+  <aside class="notes">No new app, no new form, no training. She keeps the paper she already uses and sends a photo, today by web upload, next over WhatsApp.</aside>
+</section>
+
+<!-- 7 PRODUCT -->
+<section class="slide" data-crit="">
+  <div class="center">
+    <div class="label">The product</div>
+    <h2 class="big" style="font-size:64px">Any input in. Structured data out.</h2>
     <div class="flow">
-      <div class="panel light"><div class="n">01 · Piga picha</div><h3>Any input</h3><p>Photos of forms, handwritten notes, receipts, scans and messages. Web upload today, WhatsApp next. No new app.</p></div>
+      <div class="step"><div class="n">01</div><h3>Any input</h3><p>Forms, notes, receipts, scans.</p><div class="thumb" style="background-image:url('/images/sample-sheet.jpg');background-position:center 20%"></div></div>
       <div class="arrow">→</div>
-      <div class="panel"><div class="n">02 · Soma</div><h3>Open vision model</h3><p>Runs on Nebius Token Factory. Reads the input and maps it to the organisation's own data model.</p></div>
+      <div class="step mid"><div class="n">02</div><h3>Open models</h3><p>Vision models on Nebius Token Factory read it against the organisation's own template.</p></div>
       <div class="arrow">→</div>
-      <div class="panel light"><div class="n">03 · Hifadhi</div><h3>Database</h3><div class="json">{"name": "Amina Hassan",<br>&nbsp;"signed": true,<br>&nbsp;"phone": "0712 440 983"}</div></div>
+      <div class="step"><div class="n">03</div><h3>Structured data</h3><p>Checked by a person, ready to use.</p><div class="tags"><span>Tables</span><span>JSON</span><span>API</span><span>Databases</span><span>Dashboards</span><span>Analytics</span></div></div>
     </div>
-    <div class="chips"><span class="chip fill">All sorts of inputs</span><span class="chip">One clean database</span><span class="chip">API or our web tool</span><span class="chip">Dashboards and decisions</span></div>
   </div>
-  <aside class="notes">The point is the database. Every input, whatever its format, lands as a clean record the organisation can query, report on and decide with. Integrate through the API, or use our web tool if there is no IT capacity.</aside>
+  <aside class="notes">One engine, many document types: each organisation defines a template (fields plus reference lists). Output goes wherever they need it: a spreadsheet, their own system through the API, or a dashboard.</aside>
 </section>
 
-<!-- 5 DEMO -->
-<section class="slide" data-crit="Demo">
-  <div class="eyebrow">Live demo</div>
-  <h2>A handwritten sheet in. A checked list out.</h2>
-  <div class="body">
-    <div class="cols c4" style="gap:36px">
-      <div class="col"><div class="n">01</div><h3>Upload</h3><p>A photo of a hand filled attendance sheet from our test set.</p></div>
-      <div class="col"><div class="n">02</div><h3>Read</h3><p>The engine returns one row per person: name, role, phone, signed.</p></div>
-      <div class="col"><div class="n">03</div><h3>Check</h3><p>Unclear fields are marked in turmeric. Fix them in one click.</p></div>
-      <div class="col"><div class="n">04</div><h3>Keep</h3><p>Confirm and export as JSON, ready for the database.</p></div>
+<!-- 8 DEMO -->
+<section class="slide on-photo">
+  <div class="split">
+    <div class="text">
+      <div class="label">Live demo</div>
+      <h2 class="big">Paper in.<br>Data out.</h2>
+      <p class="sub" style="font-size:22px">digitali-accel-ai-hackathon.vercel.app</p>
     </div>
-    <p class="lead" style="margin-top:auto;font-size:24px">digitali-accel-ai-hackathon.vercel.app/#demo</p>
+    <div class="photo" style="background-image:url('/images/sample-sheet.jpg');background-position:center 15%"></div>
   </div>
-  <aside class="notes">Keep the demo under 90 seconds. Use a hard sheet from test-data/photos to show the low confidence marking. Have a screen recording as backup.</aside>
+  <aside class="notes">Upload a hard sheet from the test set. Show the table, the flagged cell, fix it, export. Under 90 seconds. Backup: screen recording.</aside>
 </section>
 
-<!-- 6 MODELS -->
-<section class="slide" data-crit="Technical execution and Token Factory use">
-  <div class="eyebrow">Models on Nebius Token Factory</div>
-  <h2>An open vision model does the reading. A person does the checking.</h2>
-  <div class="body">
+<!-- 9 PROOF -->
+<section class="slide">
+  <div class="center">
+    <div class="label">The proof</div>
+    <h2 class="big" style="font-size:64px">Open models, measured.</h2>
     <table>
-      <thead><tr><th style="width:36%">Model</th><th style="width:22%">Role</th><th>Why</th></tr></thead>
+      <thead><tr><th>Vision model on Token Factory</th><th>Field accuracy</th><th>Cost / 1,000 pages</th><th>Latency p50</th></tr></thead>
       <tbody>
-        <tr><td><span class="tbd">vision model, e.g. Qwen VL</span></td><td>Extraction</td><td>Reads the photo into strict JSON. The cheapest model that passes the test set.</td></tr>
-        <tr><td><span class="tbd">larger vision model</span></td><td>Benchmark</td><td>Shows what the extra cost buys, sheet by sheet.</td></tr>
-        <tr><td><span class="tbd">closed model</span></td><td>Baseline only</td><td>Run through Vercel AI Gateway on the same test set. Not used in production.</td></tr>
-      </tbody>
-    </table>
-    <p class="lead" style="margin-top:auto;font-size:22px">Server side call to the Token Factory OpenAI compatible API with a strict JSON schema. The key never reaches the browser. Photos are not stored.</p>
-  </div>
-  <aside class="notes">Name the exact model IDs once confirmed with the /v1/models call. Why open models: cost per page, control, and data that can stay close to home.</aside>
-</section>
-
-<!-- 7 MEASUREMENT -->
-<section class="slide" data-crit="Measurable model advantage">
-  <div class="eyebrow">Measurable advantage</div>
-  <h2>Same 10 handwritten sheets. Three models. Real numbers.</h2>
-  <div class="body">
-    <table>
-      <thead><tr><th>Model</th><th>Field accuracy</th><th>Cost per page</th><th>Median latency</th></tr></thead>
-      <tbody>
-        <tr class="win"><td><span class="tbd">open model</span></td><td><span class="tbd">%</span></td><td><span class="tbd">$</span></td><td><span class="tbd">s</span></td></tr>
-        <tr><td><span class="tbd">larger open model</span></td><td><span class="tbd">%</span></td><td><span class="tbd">$</span></td><td><span class="tbd">s</span></td></tr>
+        <tr class="win"><td><span class="tbd">best value model</span></td><td><span class="tbd">%</span></td><td><span class="tbd">$</span></td><td><span class="tbd">s</span></td></tr>
+        <tr><td><span class="tbd">largest model</span></td><td><span class="tbd">%</span></td><td><span class="tbd">$</span></td><td><span class="tbd">s</span></td></tr>
         <tr><td><span class="tbd">closed baseline</span></td><td><span class="tbd">%</span></td><td><span class="tbd">$</span></td><td><span class="tbd">s</span></td></tr>
       </tbody>
     </table>
-    <p class="lead" style="margin-top:auto;font-size:22px">Test set: 10 synthetic attendance sheets in different handwriting per row (2 easy, 4 medium, 4 hard, with crossed out corrections, shadow and blur), plus 5 other documents. Field accuracy = name, role, phone and signed exactly right. Script: test-data/eval.py in our repo.</p>
+    <p class="note">Same synthetic handwritten test set for every model. Full results in eval/ in our repo.</p>
   </div>
-  <aside class="notes">A rough measurement with real numbers beats a polished claim. Say the headline: the open model reaches X percent of the closed model's accuracy at Y times lower cost.</aside>
+  <aside class="notes">Covers two criteria: Token Factory use and measurable advantage. Five open vision models run through the same engine pipeline; the cheapest one that meets the accuracy bar runs in production. Say the headline number out loud.</aside>
 </section>
 
-<!-- 8 RESPONSIBLE -->
-<section class="slide" data-crit="Responsible design">
-  <div class="eyebrow">Responsible design</div>
-  <h2>The model proposes. A person confirms.</h2>
-  <div class="body">
-    <div class="cols c3">
-      <div class="col"><div class="n">Privacy</div><h3>No photos kept</h3><p>Images are read once and discarded. Only confirmed fields are kept. All test data is synthetic.</p></div>
-      <div class="col"><div class="n">Errors</div><h3>Human in the loop</h3><p>Nothing is saved until a person checks it. Unclear fields are flagged, every field is editable.</p></div>
-      <div class="col"><div class="n">Misuse</div><h3>Fixed task</h3><p>The engine only fills a predefined record format. No free text generation, no decisions about people.</p></div>
+<!-- 10 TRUST -->
+<section class="slide on-photo">
+  <div class="split">
+    <div class="text">
+      <div class="label">Responsible by design</div>
+      <h2 class="big">The model proposes. Asha confirms.</h2>
+      <p class="sub">No photos stored. Unclear fields flagged.<br>Nothing saved without a person.</p>
     </div>
-    <div class="kanga" style="margin-top:auto">
-      <div class="drops"><svg><use href="#drop"/></svg><svg><use href="#drop"/></svg><svg><use href="#drop"/></svg><svg><use href="#drop"/></svg><svg><use href="#drop"/></svg></div>
-      <div class="in">Umoja ni nguvu</div>
-      <div class="drops"><svg><use href="#drop"/></svg><svg><use href="#drop"/></svg><svg><use href="#drop"/></svg><svg><use href="#drop"/></svg><svg><use href="#drop"/></svg></div>
-      <p>Unity is strength.</p>
-    </div>
+    <div class="photo" data-img="portrait" data-pos="30% 30%"></div>
   </div>
-  <aside class="notes">Emphasise: the model never makes a decision about a person, it only transcribes, and a person confirms.</aside>
+  <aside class="notes">Text in the photo is treated as data, never as instructions. The output must match the template's schema. Photos are processed in memory and dropped; metadata such as GPS is stripped.</aside>
 </section>
 
-<!-- 9 COMPANY -->
-<section class="slide" data-crit="Problem and company potential">
-  <div class="eyebrow">Why this is a company</div>
-  <h2>Every field organisation is a customer. Every hour saved goes back to impact.</h2>
-  <div class="body">
-    <div class="cols c3">
-      <div class="col"><div class="n">Market</div><h3>Field organisations</h3><p>NGOs, cooperatives, microfinance and public services: many field staff, paper processes.</p></div>
-      <div class="col"><div class="n">Model</div><h3>Margin on usage</h3><p>Pay per page, priced above model cost and well below manual entry. Larger clients sign usage contracts. <span class="tbd">price</span></p></div>
-      <div class="col"><div class="n">Moat</div><h3>Format library</h3><p>Each customer form becomes a reusable format, and every correction improves accuracy.</p></div>
+<!-- 11 COMPANY + TEAM -->
+<section class="slide green on-photo">
+  <div class="split">
+    <div class="text">
+      <div class="label">The company</div>
+      <h2 class="big">Every field organisation. Every hour back to impact.</h2>
+      <p class="sub">Pay per page. Usage contracts for larger clients.</p>
+      <div class="team" style="gap:24px;margin-top:56px">
+        <div><div class="avatar" style="width:80px;height:100px;font-size:38px">F</div><h3 style="font-size:28px">Finn</h3><p style="font-size:16px">Product and pitch</p></div>
+        <div><div class="avatar" style="width:80px;height:100px;font-size:38px">F</div><h3 style="font-size:28px">Felix</h3><p style="font-size:16px">Engine</p></div>
+        <div><div class="avatar" style="width:80px;height:100px;font-size:38px">E</div><h3 style="font-size:28px">Elif</h3><p style="font-size:16px">Frontend and brand</p></div>
+      </div>
     </div>
-    <p class="lead" style="margin-top:auto;font-size:22px">Next: WhatsApp intake, more document types, direct integrations, dashboards.</p>
+    <div class="photo-pad"><div class="photo arch" data-img="meeting" data-pos="center 40%"></div></div>
   </div>
-  <aside class="notes">Two revenue lines: margin on pay as you go usage, and usage contracts with committed volume. Set the price once the eval gives cost per page.</aside>
-</section>
-
-<!-- 10 TEAM -->
-<section class="slide green" data-crit="">
-  <div class="eyebrow">Team</div>
-  <div class="lockup" style="font-size:96px;color:var(--chokaa)"><svg class="mk" viewBox="0 0 1400 1800"><path d="M200,1600 L200,700 A500,500 0 0 1 1200,700 L1200,1600 Z" fill="#F4EEE3"/><path d="M700,732 C760,900 900,972 900,1092 A200,200 0 0 1 500,1092 C500,972 640,900 700,732 Z" fill="#E0A62B"/></svg><span class="wm" data-wm></span></div>
-  <div class="body">
-    <div class="cols c3">
-      <div><div class="avatar">F</div><h3 style="font-size:40px">Finn</h3><p style="font-size:20px;opacity:.8;margin-top:6px">Product and pitch</p></div>
-      <div><div class="avatar">F</div><h3 style="font-size:40px">Felix</h3><p style="font-size:20px;opacity:.8;margin-top:6px">Backend and engine</p></div>
-      <div><div class="avatar">E</div><h3 style="font-size:40px">Elif</h3><p style="font-size:20px;opacity:.8;margin-top:6px">Frontend and brand</p></div>
-    </div>
-    <p class="serif" style="font-size:40px;margin-top:auto">Less admin. More impact. <span style="font-family:'Work Sans';font-size:18px;opacity:.75;margin-left:14px">Asante.</span></p>
-  </div>
-  <aside class="notes">Close with the one line: less admin, more impact.</aside>
+  <aside class="notes">Market: microfinance, cooperatives, NGOs and public services with many field staff. Close with: less admin, more impact. Asante.</aside>
 </section>
 
 </div></div>
+<div class="credit" id="credit">Photos: Unsplash (Favour Anyula, Oscar Omondi, Christian Agbede, Mick Haupt, John Tuesday, Ahadi Lugo)</div>
 <div id="notes"></div>
 <div id="nav"><button onclick="location.href='/'" aria-label="Home" title="Home">⌂</button><button id="prev" aria-label="Previous">‹</button><button id="next" aria-label="Next">›</button></div>
 <script>
 (function(){
+  var IMG={
+    portrait:'https://images.unsplash.com/photo-1633591640507-aeb0fab6a7bc',
+    meeting:'https://images.unsplash.com/photo-1637149014802-d917e6255c2d',
+    night:'https://images.unsplash.com/photo-1775642549793-6c94f764b227',
+    register:'https://images.unsplash.com/photo-1604292771492-1aee47c1456b',
+    phone:'https://images.unsplash.com/photo-1570701876428-f7f1ca96bbdb',
+    group:'https://images.unsplash.com/photo-1593114638431-5805138c696e'
+  };
+  document.querySelectorAll('[data-img]').forEach(function(el){
+    el.style.backgroundImage="url('"+IMG[el.getAttribute('data-img')]+"?w=1400&q=80&auto=format&fit=crop')";
+    if(el.getAttribute('data-pos')) el.style.backgroundPosition=el.getAttribute('data-pos');
+  });
   var dropSvg='<svg viewBox="0 0 100 140"><use href="#drop"/></svg>';
-  document.querySelectorAll('[data-wm]').forEach(function(el){el.innerHTML='d<span class="i">ı'+dropSvg+'</span>g<span class="i">ı'+dropSvg+'</span>tal<span class="i">ı'+dropSvg+'</span>';});
+  var WM='d<span class="i">ı'+dropSvg+'</span>g<span class="i">ı'+dropSvg+'</span>tal<span class="i">ı'+dropSvg+'</span>';
+  document.querySelectorAll('[data-wm]').forEach(function(el){el.innerHTML=WM;});
   var slides=[].slice.call(document.querySelectorAll('.slide')),i=0,stage=document.getElementById('stage'),notes=document.getElementById('notes'),showNotes=false;
   slides.forEach(function(s,k){
-    var c=s.getAttribute('data-crit');
-    if(c){var d=document.createElement('div');d.className='crit';d.innerHTML='Criterion: <b>'+c+'</b>';s.appendChild(d);}
-    var f=document.createElement('div');f.className='foot';f.innerHTML='<span class="wm">d<span class="i">ı'+dropSvg+'</span>g<span class="i">ı'+dropSvg+'</span>tal<span class="i">ı'+dropSvg+'</span></span><span>'+(k+1)+' / '+slides.length+'</span>';s.appendChild(f);
+    if(k===0) return;
+    var f=document.createElement('div');f.className='foot';f.innerHTML='<span class="wm">'+WM+'</span><span>'+(k+1)+' / '+slides.length+'</span>';s.appendChild(f);
   });
   function fit(){var s=Math.min(window.innerWidth/1600,window.innerHeight/900);stage.style.transform='scale('+s+')';}
   function go(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach(function(s,k){s.classList.toggle('active',k===i)});var a=slides[i].querySelector('aside.notes');notes.textContent=a?a.textContent:'';notes.style.display=showNotes&&a?'block':'none';try{history.replaceState(null,'','#'+(i+1))}catch(e){}}

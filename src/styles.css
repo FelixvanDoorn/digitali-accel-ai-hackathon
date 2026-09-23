@@ -301,7 +301,16 @@ footer { padding: 70px max(20px, calc((100vw - 1280px) / 2)); background: var(--
   .wa-body { min-height: 420px; }
 }
 
+.arch-photo { margin: 0; display: flex; flex-direction: column; gap: 18px; }
+.arch-img { width: 100%; aspect-ratio: 3 / 4; border-radius: 999px 999px 0 0; background-color: var(--mchanga); background-size: cover; }
+.arch-photo.compact .arch-img { aspect-ratio: 4 / 3; }
+.arch-photo figcaption { font-family: var(--font-display); font-size: 24px; line-height: 1.25; color: var(--mkaa); }
+.user { display: grid; grid-template-columns: minmax(280px, .7fr) 1fr; gap: clamp(40px, 7vw, 100px); align-items: center; border-top: 1px solid var(--hairline); }
+.user .arch-img { max-height: 620px; }
+.credits { grid-column: 1 / -1; font-size: 12px; opacity: .7; }
+
 @media (max-width: 800px) {
+  .user { grid-template-columns: 1fr; }
   .page-wrap { width: min(100% - 32px, 650px); }
   .menu-button { display: inline-flex; }
   .nav-links { position: absolute; top: 76px; left: 0; right: 0; display: none; padding: 20px; background: var(--chokaa); border-bottom: 1px solid var(--hairline); flex-direction: column; align-items: stretch; gap: 12px; }

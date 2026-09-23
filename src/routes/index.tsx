@@ -39,6 +39,24 @@ function KangaSaying({ children, translation }: { children: string; translation:
   return <div className="kanga"><DropRow /><div>{children}</div><DropRow /><p>{translation}</p></div>;
 }
 
+const IMG = {
+  portrait: "https://images.unsplash.com/photo-1633591640507-aeb0fab6a7bc",
+  group: "https://images.unsplash.com/photo-1593114638431-5805138c696e",
+  meeting: "https://images.unsplash.com/photo-1637149014802-d917e6255c2d",
+  night: "https://images.unsplash.com/photo-1775642549793-6c94f764b227",
+  register: "https://images.unsplash.com/photo-1604292771492-1aee47c1456b",
+};
+
+function ArchPhoto({ src, alt, caption, compact = false, position = "center" }: { src: string; alt: string; caption?: string; compact?: boolean; position?: string }) {
+  const url = src.startsWith("http") ? `${src}?w=1200&q=80&auto=format&fit=crop` : src;
+  return (
+    <figure className={compact ? "arch-photo compact" : "arch-photo"}>
+      <div className="arch-img" role="img" aria-label={alt} style={{ backgroundImage: `url('${url}')`, backgroundPosition: position }} />
+      {caption && <figcaption>{caption}</figcaption>}
+    </figure>
+  );
+}
+
 function ArchPlaceholder({ caption, compact = false }: { caption: string; compact?: boolean }) {
   return <div className={compact ? "arch-placeholder compact" : "arch-placeholder"}><img src="/brand/digitali-mark.svg" alt="" /><p>{caption}</p></div>;
 }
@@ -76,10 +94,19 @@ function Index() {
           </div>
           <p className="caption">Works in Swahili, English and French. Handwriting welcome.</p>
         </div>
-        <ArchPlaceholder caption="Photo to be made: a field officer writing in a notebook in warm daylight." />
+        <ArchPhoto src={IMG.group} alt="A women's group meeting together" position="center 30%" />
       </section>
 
       <div className="page-wrap"><KangaSaying translation="Little by little fills the measure.">Haba na haba hujaza kibaba</KangaSaying></div>
+
+      <section id="user" className="user section page-wrap">
+        <ArchPhoto src={IMG.portrait} alt="Asha, a field officer in western Kenya" position="center 35%" />
+        <div>
+          <p className="eyebrow">The user</p>
+          <h2>Meet Asha.</h2>
+          <p className="lead">Field officer in western Kenya. She supports twelve community groups, and every meeting ends on paper.</p>
+        </div>
+      </section>
 
       <section id="whatsapp" className="whatsapp section page-wrap">
         <div className="section-heading"><div><p className="eyebrow">On WhatsApp</p><h2>Send the photo the way you already do.</h2></div><p>A preview of the WhatsApp flow, shown here on the page. The names and numbers are made up for testing.</p></div>
@@ -90,13 +117,12 @@ function Index() {
         <p className="eyebrow">The problem</p>
         <h2>Field organisations exist to help people. Too much of their time goes to admin.</h2>
         <div className="story-strip">
-          <ArchPlaceholder compact caption="Every day. Meetings, attendance, payments and visits go down on paper, in notebooks and in WhatsApp chats." />
+          <ArchPhoto compact src={IMG.meeting} alt="A group meeting under a tree" position="center 40%" caption="Every meeting ends on paper." />
           <ArrowRight aria-hidden="true" />
-          <ArchPlaceholder compact caption="Every week. Staff copy it all into spreadsheets by hand — hours that should go to the people they serve." />
+          <ArchPhoto compact src={IMG.night} alt="Admin work late in the evening" position="center 40%" caption="Her evenings go to retyping." />
           <ArrowRight aria-hidden="true" />
-          <ArchPlaceholder compact caption="Every month. Without a database, managers decide on gut feeling, weeks later." />
+          <ArchPhoto compact src={IMG.register} alt="A handwritten register" caption="Her manager decides weeks later." />
         </div>
-        <p className="caption">New apps and tablets fail on cost, training and adoption. So the paper stays, and the hours keep going into retyping.</p>
       </section>
 
       <section id="how" className="section page-wrap">
@@ -145,7 +171,7 @@ function Index() {
         <p className="pitch-note">The full deck is one click away: <a className="text-link" href="/pitch-deck/index.html">open the pitch deck <ArrowRight /></a></p>
       </section>
 
-      <footer><div className="footer-inner"><div className="footer-brand"><BrandLockup inverse /><p>Kutoka karatasi hadi data<br/><span>From paper to data</span></p></div><div className="footer-links"><a href="#how">How it works</a><a href="#who">Who it's for</a><a href="#pricing">Pricing</a><a href="/pitch-deck/index.html">Pitch deck</a><a href="#demo">Try it</a></div><p className="asante">Asante.</p></div></footer>
+      <footer><div className="footer-inner"><div className="footer-brand"><BrandLockup inverse /><p>Kutoka karatasi hadi data<br/><span>From paper to data</span></p></div><div className="footer-links"><a href="#how">How it works</a><a href="#who">Who it's for</a><a href="#pricing">Pricing</a><a href="/pitch-deck/index.html">Pitch deck</a><a href="#demo">Try it</a></div><p className="asante">Asante.</p><p className="credits">Photos: Unsplash (Favour Anyula, Oscar Omondi, Christian Agbede, Mick Haupt, Ahadi Lugo). Asha is a persona.</p></div></footer>
     </main>
   );
 }
