@@ -1,0 +1,33 @@
+{
+  "document_type": "meeting_minutes",
+  "group": "Upendo VSLA",
+  "date": "12/8/2026",
+  "attendees": [
+    "Esther Mwangi",
+    "Mariam Wanjiru",
+    "Daudi Ali",
+    "Saida Ali",
+    "Khadija Kariuki",
+    "Joyce Rashidi",
+    "Winnie Njoroge",
+    "Salim Hassan",
+    "Omari Lyimo"
+  ],
+  "attendee_count": 9,
+  "apologies": [
+    "Pendo Mushi"
+  ],
+  "savings_collected_tsh": 184000,
+  "decisions": [
+    "Loan to Asha Ali approved TSh 250,000, repay over 6 months",
+    "Next meeting moved to Thursday 19/8"
+  ],
+  "actions": [
+    {
+      "owner": "Treasurer",
+      "action": "Open M-Pesa account",
+      "due": "30/8"
+    }
+  ],
+  "difficulty": "medium"
+}

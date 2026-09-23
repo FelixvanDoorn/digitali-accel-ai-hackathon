@@ -1,0 +1,92 @@
+{
+  "document_type": "attendance_sheet",
+  "difficulty": "medium",
+  "group": "Umoja Women Group",
+  "date": "28/3/2026",
+  "records": [
+    {
+      "name": "Amina Mushi",
+      "role": "Member",
+      "phone": "0767 151 954",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Daudi Mollel",
+      "role": "Treasurer",
+      "phone": "0750 436 463",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Faraji Mwangi",
+      "role": "Treasurer",
+      "phone": "0748 584 922",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Grace Hassan",
+      "role": "",
+      "phone": "0786 684 443",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Winnie Kariuki",
+      "role": "Member",
+      "phone": "0787 518 352",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Mariam Mollel",
+      "role": "Member",
+      "phone": "0762 977 391",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Omari Kariuki",
+      "role": "Member",
+      "phone": "0738 768 727",
+      "signed": false,
+      "lowConfidence": []
+    },
+    {
+      "name": "Fatma Njoroge",
+      "role": "Member",
+      "phone": "0715 742 178",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Zawadi Akinyi",
+      "role": "Secretary",
+      "phone": "0762 190 108",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Upendo Akinyi",
+      "role": "Member",
+      "phone": "0717 392 595",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Daudi Achieng",
+      "role": "Chair",
+      "phone": "0731 879 416",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Winnie Kimaro",
+      "role": "Member",
+      "phone": "0791 884 368",
+      "signed": true,
+      "lowConfidence": []
+    }
+  ]
+}

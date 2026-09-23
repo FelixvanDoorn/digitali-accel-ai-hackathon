@@ -1,0 +1,27 @@
+{
+  "document_type": "field_visit_note",
+  "date": "21/7/2026",
+  "farmer": "Baraka Otieno",
+  "location": "Kisumu West",
+  "crops": [
+    "maize",
+    "beans"
+  ],
+  "acreage": 2.5,
+  "issues": [
+    "fall armyworm on east plot"
+  ],
+  "advice": [
+    "spray within 1 week"
+  ],
+  "requests": [
+    {
+      "type": "loan",
+      "purpose": "irrigation pump",
+      "amount_ksh": 45000
+    }
+  ],
+  "follow_up": "4/8",
+  "officer": "G. Wanjiru",
+  "difficulty": "hard"
+}

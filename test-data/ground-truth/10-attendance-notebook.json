@@ -1,0 +1,78 @@
+{
+  "document_type": "attendance_sheet",
+  "difficulty": "hard",
+  "group": "Baraka Fishers Group",
+  "date": "21/9/2026",
+  "records": [
+    {
+      "name": "Mariam Kariuki",
+      "role": "",
+      "phone": "0721 344 212",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Peter Rashidi",
+      "role": "Member",
+      "phone": "0764 907 528",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Halima Otieno",
+      "role": "",
+      "phone": "0717 279 507",
+      "signed": false,
+      "lowConfidence": []
+    },
+    {
+      "name": "Josephine Mwangi",
+      "role": "Member",
+      "phone": "0753 863 997",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Tumaini Mushi",
+      "role": "Member",
+      "phone": "0724 864 640",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Neema Akinyi",
+      "role": "Chair",
+      "phone": "0783 395 165",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Tumaini Omondi",
+      "role": "Member",
+      "phone": "0754 396 980",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Amina Mbwana",
+      "role": "Treasurer",
+      "phone": "0747 218 802",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Mariam Mushi",
+      "role": "",
+      "phone": "0796 411 729",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Amina Kimaro",
+      "role": "Treasurer",
+      "phone": "0766 481 177",
+      "signed": true,
+      "lowConfidence": []
+    }
+  ]
+}

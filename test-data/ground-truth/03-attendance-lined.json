@@ -1,0 +1,71 @@
+{
+  "document_type": "attendance_sheet",
+  "difficulty": "easy",
+  "group": "Kilimo Bora Farmers",
+  "date": "14/10/2026",
+  "records": [
+    {
+      "name": "Fatma Achieng",
+      "role": "Member",
+      "phone": "0747 309 537",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Esther Otieno",
+      "role": "Member",
+      "phone": "0772 606 218",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Rehema Mwangi",
+      "role": "Member",
+      "phone": "0729 266 229",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Daudi Wanjiru",
+      "role": "Member",
+      "phone": "0732 915 886",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Neema Rashidi",
+      "role": "Chair",
+      "phone": "0726 210 436",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Khadija Said",
+      "role": "Member",
+      "phone": "0728 660 896",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Rukia Mushi",
+      "role": "Member",
+      "phone": "0768 554 365",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Khadija Hassan",
+      "role": "Member",
+      "phone": "0768 781 295",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Rukia Omondi",
+      "role": "Member",
+      "phone": "0755 432 969",
+      "signed": true,
+      "lowConfidence": []
+    }
+  ]
+}

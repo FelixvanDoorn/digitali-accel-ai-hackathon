@@ -1,0 +1,92 @@
+{
+  "document_type": "attendance_sheet",
+  "difficulty": "medium",
+  "group": "Faraja Chama",
+  "date": "7/6/2026",
+  "records": [
+    {
+      "name": "Esther Mushi",
+      "role": "Chair",
+      "phone": "0724 528 449",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Zawadi Swai",
+      "role": "Secretary",
+      "phone": "0784 433 447",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Asha Mwangi",
+      "role": "Member",
+      "phone": "0711 411 887",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Asha Mbwana",
+      "role": "Member",
+      "phone": "0781 952 600",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Mariam Kariuki",
+      "role": "Member",
+      "phone": "0753 216 414",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Faraji Mushi",
+      "role": "",
+      "phone": "0724 491 834",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Asha Njoroge",
+      "role": "",
+      "phone": "",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Saida Swai",
+      "role": "Treasurer",
+      "phone": "",
+      "signed": false,
+      "lowConfidence": []
+    },
+    {
+      "name": "Saida Mushi",
+      "role": "Treasurer",
+      "phone": "0771 423 230",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Saida Hassan",
+      "role": "Member",
+      "phone": "0719 668 288",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Amina Omondi",
+      "role": "Member",
+      "phone": "0763 353 759",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Josephine Achieng",
+      "role": "",
+      "phone": "0730 911 996",
+      "signed": true,
+      "lowConfidence": []
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "document_type": "savings_ledger",
+  "group": "Neema Savings",
+  "week": 36,
+  "entries": [
+    {
+      "name": "Imani Achieng",
+      "paid_tsh": 10000,
+      "balance_tsh": 80000
+    },
+    {
+      "name": "Rehema Wanjiru",
+      "paid_tsh": 0,
+      "balance_tsh": 0
+    },
+    {
+      "name": "Juma Kariuki",
+      "paid_tsh": 10000,
+      "balance_tsh": 80000
+    },
+    {
+      "name": "Amina Mbwana",
+      "paid_tsh": 0,
+      "balance_tsh": 60000
+    },
+    {
+      "name": "Upendo Mushi",
+      "paid_tsh": 20000,
+      "balance_tsh": 40000
+    },
+    {
+      "name": "Rehema Mushi",
+      "paid_tsh": 10000,
+      "balance_tsh": 60000
+    },
+    {
+      "name": "Hassan Ali",
+      "paid_tsh": 10000,
+      "balance_tsh": 25000
+    },
+    {
+      "name": "Fatma Kimaro",
+      "paid_tsh": 10000,
+      "balance_tsh": 80000
+    }
+  ],
+  "total_paid_tsh": 70000,
+  "difficulty": "hard"
+}

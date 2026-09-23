@@ -1,0 +1,71 @@
+{
+  "document_type": "attendance_sheet",
+  "difficulty": "easy",
+  "group": "Jumuiya ya Tumaini",
+  "date": "19/5/2026",
+  "records": [
+    {
+      "name": "Mariam Mollel",
+      "role": "Chair",
+      "phone": "0712 624 742",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Upendo Mwangi",
+      "role": "Member",
+      "phone": "0717 310 901",
+      "signed": false,
+      "lowConfidence": []
+    },
+    {
+      "name": "Tumaini Mushi",
+      "role": "Member",
+      "phone": "0794 276 735",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Mwanaisha Kariuki",
+      "role": "Member",
+      "phone": "0782 878 980",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Amina Kimaro",
+      "role": "Member",
+      "phone": "0794 421 686",
+      "signed": false,
+      "lowConfidence": []
+    },
+    {
+      "name": "Salim Kariuki",
+      "role": "Treasurer",
+      "phone": "0732 835 594",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Pendo Hassan",
+      "role": "Treasurer",
+      "phone": "0796 757 267",
+      "signed": false,
+      "lowConfidence": []
+    },
+    {
+      "name": "Fatma Ali",
+      "role": "Member",
+      "phone": "0778 431 789",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Omari Akinyi",
+      "role": "Member",
+      "phone": "0784 217 184",
+      "signed": false,
+      "lowConfidence": []
+    }
+  ]
+}

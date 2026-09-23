@@ -1,0 +1,92 @@
+{
+  "document_type": "attendance_sheet",
+  "difficulty": "medium",
+  "group": "Mwanga Youth Group",
+  "date": "6/9/2026",
+  "records": [
+    {
+      "name": "Saida Ali",
+      "role": "Treasurer",
+      "phone": "0726 284 874",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Faraji Juma",
+      "role": "Member",
+      "phone": "0766 595 484",
+      "signed": false,
+      "lowConfidence": []
+    },
+    {
+      "name": "Imani Rashidi",
+      "role": "Member",
+      "phone": "0763 406 523",
+      "signed": false,
+      "lowConfidence": []
+    },
+    {
+      "name": "Rukia Wanjiru",
+      "role": "Member",
+      "phone": "0773 761 416",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Omari Otieno",
+      "role": "Secretary",
+      "phone": "0792 459 717",
+      "signed": false,
+      "lowConfidence": []
+    },
+    {
+      "name": "Winnie Juma",
+      "role": "Member",
+      "phone": "",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Rukia Swai",
+      "role": "Secretary",
+      "phone": "0735 617 986",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Juma Lyimo",
+      "role": "Member",
+      "phone": "0761 804 833",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Halima Achieng",
+      "role": "Treasurer",
+      "phone": "0729 401 122",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Joyce Mbwana",
+      "role": "",
+      "phone": "0745 450 719",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Joyce Njoroge",
+      "role": "",
+      "phone": "0711 461 988",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Imani Hassan",
+      "role": "Chair",
+      "phone": "",
+      "signed": true,
+      "lowConfidence": []
+    }
+  ]
+}

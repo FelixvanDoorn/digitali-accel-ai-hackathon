@@ -1,0 +1,50 @@
+{
+  "document_type": "attendance_sheet",
+  "difficulty": "hard",
+  "group": "Shamba Letu Coop",
+  "date": "28/6/2026",
+  "records": [
+    {
+      "name": "Imani Ali",
+      "role": "Member",
+      "phone": "0783 608 607",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Fatma Shabani",
+      "role": "Member",
+      "phone": "0763 436 244",
+      "signed": false,
+      "lowConfidence": []
+    },
+    {
+      "name": "Grace Hassan",
+      "role": "",
+      "phone": "",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Rehema Hassan",
+      "role": "Member",
+      "phone": "0726 471 985",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Winnie Achieng",
+      "role": "Member",
+      "phone": "0736 423 258",
+      "signed": false,
+      "lowConfidence": []
+    },
+    {
+      "name": "Tumaini Lyimo",
+      "role": "Treasurer",
+      "phone": "0770 343 750",
+      "signed": true,
+      "lowConfidence": []
+    }
+  ]
+}

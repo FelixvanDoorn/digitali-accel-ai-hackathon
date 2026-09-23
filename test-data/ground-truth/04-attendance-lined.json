@@ -1,0 +1,50 @@
+{
+  "document_type": "attendance_sheet",
+  "difficulty": "medium",
+  "group": "Neema Savings Group",
+  "date": "1/2/2026",
+  "records": [
+    {
+      "name": "Pendo Akinyi",
+      "role": "",
+      "phone": "0728 381 588",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Rehema Kimaro",
+      "role": "Chair",
+      "phone": "",
+      "signed": false,
+      "lowConfidence": []
+    },
+    {
+      "name": "Pendo Shabani",
+      "role": "Member",
+      "phone": "0711 893 734",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Mwanaisha Swai",
+      "role": "Secretary",
+      "phone": "0710 912 364",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Zawadi Achieng",
+      "role": "Member",
+      "phone": "0797 310 915",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Omari Mbwana",
+      "role": "Member",
+      "phone": "",
+      "signed": false,
+      "lowConfidence": []
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "document_type": "attendance_sheet",
+  "difficulty": "hard",
+  "group": "Pamoja Traders",
+  "date": "15/3/2026",
+  "records": [
+    {
+      "name": "Hassan Swai",
+      "role": "Member",
+      "phone": "0714 522 927",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Salim Lyimo",
+      "role": "Member",
+      "phone": "0738 269 817",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Zawadi Mbwana",
+      "role": "Member",
+      "phone": "0745 978 443",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Rehema Juma",
+      "role": "Member",
+      "phone": "",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Tumaini Achieng",
+      "role": "Member",
+      "phone": "0777 432 775",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Mariam Mushi",
+      "role": "Member",
+      "phone": "0746 621 118",
+      "signed": false,
+      "lowConfidence": []
+    },
+    {
+      "name": "Rukia Said",
+      "role": "",
+      "phone": "0718 880 893",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Fatma Akinyi",
+      "role": "Member",
+      "phone": "",
+      "signed": false,
+      "lowConfidence": []
+    },
+    {
+      "name": "Winnie Hassan",
+      "role": "Member",
+      "phone": "0748 666 956",
+      "signed": false,
+      "lowConfidence": []
+    },
+    {
+      "name": "Mariam Achieng",
+      "role": "Member",
+      "phone": "0795 391 161",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Saida Mbwana",
+      "role": "",
+      "phone": "0745 299 253",
+      "signed": true,
+      "lowConfidence": []
+    }
+  ]
+}

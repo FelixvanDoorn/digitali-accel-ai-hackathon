@@ -1,0 +1,64 @@
+{
+  "document_type": "attendance_sheet",
+  "difficulty": "hard",
+  "group": "Upendo VSLA",
+  "date": "7/3/2026",
+  "records": [
+    {
+      "name": "Halima Achieng",
+      "role": "",
+      "phone": "",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Rehema Swai",
+      "role": "Member",
+      "phone": "0799 628 642",
+      "signed": false,
+      "lowConfidence": []
+    },
+    {
+      "name": "Tumaini Shabani",
+      "role": "Member",
+      "phone": "0719 274 979",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Grace Achieng",
+      "role": "Member",
+      "phone": "",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Fatma Mwangi",
+      "role": "Secretary",
+      "phone": "0714 162 921",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Josephine Njoroge",
+      "role": "",
+      "phone": "0710 704 913",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Peter Njoroge",
+      "role": "Secretary",
+      "phone": "0745 391 661",
+      "signed": true,
+      "lowConfidence": []
+    },
+    {
+      "name": "Omari Kimaro",
+      "role": "Member",
+      "phone": "0725 109 211",
+      "signed": false,
+      "lowConfidence": []
+    }
+  ]
+}
