@@ -53,6 +53,9 @@ td:first-child{color:var(--mkaa)}
 tr.win td{background:color-mix(in srgb,var(--mwani) 10%,transparent)}
 .tbd{background:color-mix(in srgb,var(--manjano) 28%,transparent);border-bottom:2px solid var(--manjano);padding:0 8px;color:var(--mkaa);font-weight:500;font-size:.92em}
 .note{font-size:20px;color:var(--muted);margin-top:auto;line-height:1.5}
+.orgp{list-style:none;margin-top:44px;border-top:1px solid var(--mkaa)}
+.orgp li{display:flex;gap:24px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--hairline);font-size:24px;color:var(--soft)}
+.orgp b{font-family:"Fraunces",serif;font-weight:400;font-size:30px;color:var(--mkaa);min-width:170px}
 /* wordmark */
 .wm{font-family:"Fraunces",serif;font-weight:500;line-height:1;white-space:nowrap}
 .wm .i{position:relative;display:inline-block}
@@ -120,7 +123,7 @@ aside.notes{display:none}
       <p class="sub">Attendance, savings, loans, visits.<br>Signed, stamped, filed.</p>
     </div>
     <div style="display:grid;grid-template-rows:1fr 1fr">
-      <div class="photo" data-img="meeting" data-pos="center 40%"></div>
+      <div class="photo" data-img="meeting" data-pos="center 45%"></div>
       <div class="photo" style="background-image:url('/images/sample-sheet.jpg');background-position:center 22%"></div>
     </div>
   </div>
@@ -135,22 +138,26 @@ aside.notes{display:none}
       <h2 class="big">Back at the branch, hours go to retyping.</h2>
       <p class="sub">Hours of admin instead of hours with the people she serves.</p>
     </div>
-    <div class="photo" data-img="night" data-pos="30% center"></div>
+    <div class="photo" data-img="night" data-pos="center"></div>
   </div>
   <aside class="notes">After the field visits, every sheet gets typed into a spreadsheet at the branch. Slow, full of typos, and hours away from the field.</aside>
 </section>
 
-<!-- 5 PROBLEM -->
+<!-- 5 PROBLEM: the organisation -->
 <section class="slide on-photo">
   <div class="split">
     <div class="text">
-      <div class="label">The problem</div>
-      <h2 class="big">Her manager decides weeks later.</h2>
-      <p class="sub">The data is there. It is just stuck on paper.</p>
+      <div class="label">The problem · the organisation</div>
+      <h2 class="big">No data to decide.<br>No data to report.</h2>
+      <ul class="orgp">
+        <li><b>Decisions</b><span>made on gut feeling, weeks late</span></li>
+        <li><b>Reporting</b><span>to funders and regulators, rebuilt by hand</span></li>
+        <li><b>Risk</b><span>missed repayments and drop-outs spotted too late</span></li>
+      </ul>
     </div>
     <div class="photo" data-img="register" data-pos="center"></div>
   </div>
-  <aside class="notes">Head office sees repayment and attendance weeks late, if at all. Decisions run on gut feeling instead of data.</aside>
+  <aside class="notes">Asha's problem is the organisation's problem. The data exists, but it sits on paper in branches. Management decides without it, reports to funders and regulators take weeks of manual work, and problems in the field show up in the numbers far too late.</aside>
 </section>
 
 <!-- 6 SOLUTION -->
@@ -239,23 +246,23 @@ aside.notes{display:none}
         <div><div class="avatar" style="width:80px;height:100px;font-size:38px">E</div><h3 style="font-size:28px">Elif</h3><p style="font-size:16px">Frontend and brand</p></div>
       </div>
     </div>
-    <div class="photo-pad"><div class="photo arch" data-img="meeting" data-pos="center 40%"></div></div>
+    <div class="photo-pad"><div class="photo arch" data-img="meeting" data-pos="center 45%"></div></div>
   </div>
   <aside class="notes">Market: microfinance, cooperatives, NGOs and public services with many field staff. Close with: less admin, more impact. Asante.</aside>
 </section>
 
 </div></div>
-<div class="credit" id="credit">Photos: Unsplash (Favour Anyula, Oscar Omondi, Fotografía Editorial, Mick Haupt, John Tuesday, Ahadi Lugo)</div>
+<div class="credit" id="credit">Photos: Unsplash (Favour Anyula, Ahadi Lugo, Random Institute, Wonderlane, Sear Greyson, Akshar Dave)</div>
 <div id="notes"></div>
 <div id="nav"><button onclick="location.href='/'" aria-label="Home" title="Home">⌂</button><button id="prev" aria-label="Previous">‹</button><button id="next" aria-label="Next">›</button></div>
 <script>
 (function(){
   var IMG={
     portrait:'https://images.unsplash.com/photo-1633591640507-aeb0fab6a7bc',
-    meeting:'https://images.unsplash.com/photo-1637149014802-d917e6255c2d',
-    night:'https://images.unsplash.com/photo-1765648496267-a0b528fb97fb',
-    register:'https://images.unsplash.com/photo-1604292771492-1aee47c1456b',
-    phone:'https://images.unsplash.com/photo-1570701876428-f7f1ca96bbdb',
+    meeting:'https://images.unsplash.com/photo-1779357807569-18d3df9df645',
+    night:'https://images.unsplash.com/photo-1566699270403-3f7e3f340664',
+    register:'https://images.unsplash.com/photo-1526656001029-20a71b17f7ba',
+    phone:'https://images.unsplash.com/photo-1648279220423-14606cb98f22',
     group:'https://images.unsplash.com/photo-1593114638431-5805138c696e'
   };
   document.querySelectorAll('[data-img]').forEach(function(el){
