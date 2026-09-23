@@ -72,8 +72,9 @@ jobs:
         run: |
           # vercel curl gets past Deployment Protection, which guards preview and per-deployment URLs.
           for attempt in 1 2 3 4 5; do
-            health="$(npx --yes vercel@59 curl /health --deployment "$URL" --token "$VERCEL_TOKEN" 2>/dev/null | tail -n 1 || true)"
-            echo "$health"
+            output="$(npx --yes vercel@59 curl /health --deployment "$URL" --token "$VERCEL_TOKEN" 2>&1 || true)"
+            echo "$output" | grep -v -E "^npm warn" | tail -n 5
+            health="$(echo "$output" | tail -n 1)"
             if echo "$health" | jq -e '.model_configured == true' >/dev/null 2>&1; then
               echo "### Engine $TARGET deployment" >> "$GITHUB_STEP_SUMMARY"
               echo "$URL (healthy)" >> "$GITHUB_STEP_SUMMARY"
