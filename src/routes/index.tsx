@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, BookOpen, ClipboardList, FileText, Menu, MessageCircle, ReceiptText, X } from "lucide-react";
+import { ArrowRight, BookOpen, ClipboardList, FileText, LayoutDashboard, Menu, MessageCircle, ReceiptText, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { BrandLockup, DropRow } from "@/components/wordmark";
@@ -78,6 +78,7 @@ function Index() {
           <a href="#how" onClick={() => setMenuOpen(false)}>How it works</a>
           <a href="#who" onClick={() => setMenuOpen(false)}>Who it's for</a>
           <a href="#pricing" onClick={() => setMenuOpen(false)}>Pricing</a>
+          <Button asChild variant="outline"><a href="/dashboard"><LayoutDashboard aria-hidden="true" /> Dashboard</a></Button>
           <span className="language" aria-label="Language"><b>EN</b><i />SW</span>
         </div>
         <Button className="menu-button" variant="ghost" size="icon" aria-label={menuOpen ? "Close menu" : "Open menu"} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</Button>
