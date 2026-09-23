@@ -17,7 +17,10 @@ class Settings(BaseSettings):
     text_model: str = ""
 
     allowed_origins: list[str] = ["http://localhost:5173", "http://localhost:8080"]
+    # Also allow origins matching this regex, e.g. every Vercel preview URL of the frontend project.
+    allowed_origin_regex: str | None = None
     templates_dir: Path = REPO_DIR / "templates"
+    prompts_dir: Path = REPO_DIR / "prompts"
     # Empty means photos are never stored. Set a folder to keep uploads (e.g. for building the eval set).
     save_uploads_dir: Path | None = None
 

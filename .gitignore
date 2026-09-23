@@ -1,11 +1,34 @@
-.vercel
-.env*
-
 # Secrets: never commit API keys
-nebius_token.env
-*.env
 .env
+.env.*
+*.env
+!.env.example
 !*.env.example
 
+# Python (engine/, eval/)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
 # Local runs and saved uploads
+engine/uploads/
 eval/results/
+
+# Deploy
+.vercel
+
+# Editors and OS
+.vscode/
+.idea/
+*.swp
+.DS_Store

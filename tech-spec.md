@@ -43,6 +43,7 @@ Lovable creates and owns its own GitHub repo, and syncs with its default branch.
 ```
 engine/      FastAPI app, pipeline, Dockerfile
 templates/   one JSON file per template
+prompts/     prompt wording as Markdown, editable without code
 eval/        test set (synthetic photos + ground truth) and runner
 ```
 

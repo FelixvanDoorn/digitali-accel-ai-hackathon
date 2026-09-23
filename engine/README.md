@@ -27,6 +27,15 @@ uv run python scripts/submit.py photos/*.jpg --template delivery-note --url http
 
 To keep uploaded photos and results locally (e.g. to build the eval set), set `SAVE_UPLOADS_DIR=uploads` in `.env`. Leave it empty to store nothing.
 
+## Prompts
+
+The wording sent to the model lives in `../prompts/` as plain Markdown, so anyone can edit it without touching code:
+
+1. `system.md`: the standing instructions (document type, fields, rules, output format).
+2. `user.md`: the message sent with each photo.
+
+Keep the `{{placeholders}}` spelled as they are; the engine fills them in from the template. Edits apply to the next request, no restart needed. Run the eval to check a change actually helps.
+
 ## Test
 
 The tests mock Token Factory, so they need no API key.

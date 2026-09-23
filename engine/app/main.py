@@ -33,6 +33,7 @@ app = FastAPI(title="Digitali engine", version="0.1.0", lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.allowed_origins,
+    allow_origin_regex=settings.allowed_origin_regex,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
