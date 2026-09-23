@@ -48,6 +48,7 @@ async function extractViaEngine(
   const form = new FormData();
   form.append("image", new Blob([bytes], { type: data.mimeType }), "photo");
   form.append("template_id", "attendance");
+  form.append("source", "web");
   if (prompt) form.append("instructions", prompt);
 
   const headers: Record<string, string> = {};

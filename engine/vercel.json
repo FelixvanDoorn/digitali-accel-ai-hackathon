@@ -5,5 +5,8 @@
       "maxDuration": 60,
       "includeFiles": "{app,templates,prompts}/**"
     }
-  }
+  },
+  "regions": [
+    "fra1"
+  ]
 }
