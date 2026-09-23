@@ -71,8 +71,9 @@ jobs:
           URL: ${{ steps.deploy.outputs.url }}
         run: |
           # vercel curl gets past Deployment Protection, which guards preview and per-deployment URLs.
+          # Flags after `curl` go to curl itself, so --token must come before it.
           for attempt in 1 2 3 4 5; do
-            output="$(npx --yes vercel@59 curl /health --deployment "$URL" --token "$VERCEL_TOKEN" 2>&1 || true)"
+            output="$(npx --yes vercel@59 --token "$VERCEL_TOKEN" curl /health --deployment "$URL" 2>&1 || true)"
             echo "$output" | grep -v -E "^npm warn" | tail -n 5
             health="$(echo "$output" | tail -n 1)"
             if echo "$health" | jq -e '.model_configured == true' >/dev/null 2>&1; then
