@@ -19,9 +19,66 @@ const resultSchema = z.object({ records: z.array(recordSchema).max(50) });
 
 export type ExtractedRecord = z.infer<typeof recordSchema>;
 
+type EngineResponse = {
+  records?: Array<Record<string, unknown>>;
+  flags?: Array<{ record: number; field: string; reason: string }>;
+};
+
+const FIELDS = ["name", "role", "phone", "signed"] as const;
+
+async function extractViaEngine(engineUrl: string, data: z.infer<typeof inputSchema>, prompt?: string) {
+  const base64 = data.dataUrl.slice(data.dataUrl.indexOf(",") + 1);
+  const bytes = Uint8Array.from(Buffer.from(base64, "base64"));
+  const form = new FormData();
+  form.append("image", new Blob([bytes], { type: data.mimeType }), "photo");
+  form.append("template_id", "attendance");
+  if (prompt) form.append("instructions", prompt);
+
+  const headers: Record<string, string> = {};
+  const key = process.env["ENGINE_API_KEY"];
+  if (key) headers["x-api-key"] = key;
+
+  const response = await fetch(`${engineUrl.replace(/\/$/, "")}/extract`, { method: "POST", headers, body: form });
+  if (!response.ok) {
+    const detail = await response.text();
+    console.error(`Engine request failed [${response.status}]: ${detail}`);
+    throw new Error(`The photo could not be read (${response.status}). Please try again.`);
+  }
+  const payload = (await response.json()) as EngineResponse;
+  const records = (payload.records ?? []).slice(0, 50).map((raw, index) => {
+    const flagged = new Set((payload.flags ?? []).filter((f) => f.record === index).map((f) => f.field));
+    const text = (field: "name" | "role" | "phone") => {
+      const value = raw[field];
+      if (value === null || value === undefined) {
+        flagged.add(field);
+        return "";
+      }
+      return String(value);
+    };
+    const signedRaw = raw["signed"];
+    if (typeof signedRaw !== "boolean") flagged.add("signed");
+    return {
+      name: text("name"),
+      role: text("role"),
+      phone: text("phone"),
+      signed: signedRaw === true,
+      lowConfidence: FIELDS.filter((field) => flagged.has(field)),
+    };
+  });
+  return resultSchema.parse({ records });
+}
+
 export const extractAttendance = createServerFn({ method: "POST" })
   .inputValidator((input) => inputSchema.parse(input))
   .handler(async ({ data }) => {
+    const engineUrl = process.env["ENGINE_URL"];
+    if (engineUrl) {
+      if (!data.dataUrl.startsWith(`data:${data.mimeType};base64,`)) {
+        throw new Error("The uploaded photo format does not match its contents.");
+      }
+      return extractViaEngine(engineUrl, data, data.prompt);
+    }
+
     const apiKey = process.env["NEBIUS_API_KEY"];
     if (!apiKey) throw new Error("The photo reader is not configured yet.");
     if (!data.dataUrl.startsWith(`data:${data.mimeType};base64,`)) {

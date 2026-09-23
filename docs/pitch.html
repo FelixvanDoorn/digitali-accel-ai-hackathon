@@ -73,10 +73,11 @@ h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:400;letter-spacing:-.0
 .eout .k{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mwani)}
 .eout code{font-family:ui-monospace,Menlo,monospace;font-size:15px;white-space:nowrap;color:var(--mkaa)}
 /* table */
-table{width:100%;border-collapse:collapse;font-size:26px;margin-top:56px}
+table{width:100%;border-collapse:collapse;font-size:24px;margin-top:40px}
 th{text-align:left;font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:0 18px 16px;border-bottom:1px solid var(--mkaa)}
-td{padding:24px 18px;border-bottom:1px solid var(--hairline);color:var(--soft)}
+td{padding:16px 18px;border-bottom:1px solid var(--hairline);color:var(--soft)}
 td:first-child{color:var(--mkaa)}
+.tag{font-size:14px;color:var(--muted);border:1px solid var(--hairline);border-radius:999px;padding:2px 10px;margin-left:8px;vertical-align:middle}
 tr.win td{background:color-mix(in srgb,var(--mwani) 10%,transparent)}
 .tbd{background:color-mix(in srgb,var(--manjano) 28%,transparent);border-bottom:2px solid var(--manjano);padding:0 8px;color:var(--mkaa);font-weight:500;font-size:.92em}
 .note{font-size:20px;color:var(--muted);margin-top:auto;line-height:1.5}
@@ -147,7 +148,7 @@ aside.notes{display:none}
     <div class="text">
       <div class="label">The user</div>
       <h2 class="big">Every meeting ends on paper.</h2>
-      <p class="sub">Attendance, savings, loans, visits.<br>Signed, stamped, filed.</p>
+      <p class="sub">Twelve groups, a meeting each week.<br>Attendance, savings, loans: all on paper.</p>
     </div>
     <div class="photo" data-img="meeting" data-pos="center 60%"></div>
   </div>
@@ -160,7 +161,7 @@ aside.notes{display:none}
     <div class="text">
       <div class="label">The problem</div>
       <h2 class="big">Back at the branch, hours go to retyping.</h2>
-      <p class="sub">Hours of admin instead of hours with the people she serves.</p>
+      <p class="sub">Every sheet typed into Excel by hand.<br>Her organisation already pays for this, in staff hours.</p>
     </div>
     <div class="photo" data-img="night" data-pos="center"></div>
   </div>
@@ -264,14 +265,16 @@ aside.notes{display:none}
     <div class="label">The proof</div>
     <h2 class="big" style="font-size:64px">Open models, measured.</h2>
     <table>
-      <thead><tr><th>Vision model on Token Factory</th><th>Field accuracy</th><th>Cost / 1,000 pages</th><th>Latency p50</th></tr></thead>
+      <thead><tr><th>Approach</th><th>Field accuracy</th><th>Cost / 1,000 pages</th><th>Latency p50</th></tr></thead>
       <tbody>
-        <tr class="win"><td><span class="tbd">best value model</span></td><td><span class="tbd">%</span></td><td><span class="tbd">$</span></td><td><span class="tbd">s</span></td></tr>
-        <tr><td><span class="tbd">largest model</span></td><td><span class="tbd">%</span></td><td><span class="tbd">$</span></td><td><span class="tbd">s</span></td></tr>
-        <tr><td><span class="tbd">closed baseline</span></td><td><span class="tbd">%</span></td><td><span class="tbd">$</span></td><td><span class="tbd">s</span></td></tr>
+        <tr class="win"><td>MiniCPM-V 4.5 <span class="tag">open · production</span></td><td><span class="tbd">%</span></td><td><span class="tbd">$</span></td><td><span class="tbd">s</span></td></tr>
+        <tr><td>GLM-5.3 Flash <span class="tag">open</span></td><td><span class="tbd">%</span></td><td><span class="tbd">$</span></td><td><span class="tbd">s</span></td></tr>
+        <tr><td>Kimi K3 <span class="tag">open · largest</span></td><td><span class="tbd">%</span></td><td><span class="tbd">$</span></td><td><span class="tbd">s</span></td></tr>
+        <tr><td>Closed model <span class="tag">baseline only</span></td><td><span class="tbd">%</span></td><td><span class="tbd">$</span></td><td><span class="tbd">s</span></td></tr>
+        <tr><td>Retyping by hand <span class="tag">today</span></td><td><span class="tbd">%</span></td><td><span class="tbd">$</span></td><td><span class="tbd">min</span></td></tr>
       </tbody>
     </table>
-    <p class="note">Same synthetic handwritten test set for every model. Full results in eval/ in our repo.</p>
+    <p class="note">Same synthetic handwritten test set, same engine pipeline, for every model. Five open vision models on Nebius Token Factory tested; the cheapest one that meets the accuracy bar runs in production. Results and script: eval/ in our repo.</p>
   </div>
   <aside class="notes">Covers two criteria: Token Factory use and measurable advantage. Five open vision models run through the same engine pipeline; the cheapest one that meets the accuracy bar runs in production. Say the headline number out loud.</aside>
 </section>
@@ -282,7 +285,7 @@ aside.notes{display:none}
     <div class="text">
       <div class="label">Responsible by design</div>
       <h2 class="big">The model proposes. Asha confirms.</h2>
-      <p class="sub">No photos stored. Unclear fields flagged.<br>Nothing saved without a person.</p>
+      <p class="sub">No photos stored, location data stripped.<br>Unclear fields flagged, every field editable.<br>Nothing saved without a person.</p>
     </div>
     <div class="photo" data-img="portrait" data-pos="center 25%"></div>
   </div>
@@ -295,7 +298,7 @@ aside.notes{display:none}
     <div class="text">
       <div class="label">The company</div>
       <h2 class="big">Every field organisation. Every hour back to impact.</h2>
-      <p class="sub">Pay per page. Usage contracts for larger clients.</p>
+      <p class="sub">Pay per page, far below the cost of retyping. Every new form becomes a reusable template. Thousands of field organisations, one engine.</p>
       <div class="team" style="gap:24px;margin-top:56px">
         <div><div class="avatar" style="width:80px;height:100px;font-size:38px">F</div><h3 style="font-size:28px">Finn</h3><p style="font-size:16px">Product and pitch</p></div>
         <div><div class="avatar" style="width:80px;height:100px;font-size:38px">F</div><h3 style="font-size:28px">Felix</h3><p style="font-size:16px">Engine</p></div>
