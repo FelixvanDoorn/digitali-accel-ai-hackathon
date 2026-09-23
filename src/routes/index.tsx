@@ -109,12 +109,12 @@ function Index() {
       </section>
 
       <section className="field-strip page-wrap" aria-label="A day in the field">
-        {[
+        {([
           ["/images/field-walk.jpg", "Walking between villages"],
           ["/images/home-visit.jpg", "Home visits"],
           ["/images/water-point.jpg", "Project check-ins"],
           ["/images/photo-sheet.jpg", "One photo of the sheet"],
-        ].map(([src, caption]) => (
+        ] as const).map(([src, caption]) => (
           <ArchPhoto key={src} compact src={src} alt={caption} caption={caption} />
         ))}
       </section>
