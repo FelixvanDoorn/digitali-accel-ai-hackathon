@@ -63,6 +63,15 @@ h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:400;letter-spacing:-.0
 .nebius{align-self:center;width:72%;border:1px solid var(--mkaa);background:#EBE2D2;padding:12px 16px;text-align:center;display:flex;flex-direction:column;gap:2px}
 .nebius b{font-weight:600;font-size:18px}
 .nebius span{font-size:15px;color:var(--muted)}
+.esix{display:grid;grid-template-columns:repeat(6,1fr);gap:26px;margin-top:60px}
+.esix>div{border-top:1px solid var(--mkaa);padding-top:22px}
+.esix>div.ai{border-top:4px solid var(--mwani);padding-top:19px}
+.esix .n{font-family:"Fraunces",serif;color:var(--hina);font-size:22px}
+.esix h3{font-size:34px;margin:10px 0 12px}
+.esix p{font-size:20px;line-height:1.45;color:var(--soft)}
+.eout{margin-top:auto;display:flex;gap:18px;align-items:center;background:#EBE2D2;padding:18px 22px}
+.eout .k{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mwani)}
+.eout code{font-family:ui-monospace,Menlo,monospace;font-size:15px;white-space:nowrap;color:var(--mkaa)}
 /* table */
 table{width:100%;border-collapse:collapse;font-size:26px;margin-top:56px}
 th{text-align:left;font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:0 18px 16px;border-bottom:1px solid var(--mkaa)}
@@ -206,7 +215,7 @@ aside.notes{display:none}
         <div class="engine">
           <svg class="emark" viewBox="0 0 1400 1800"><path d="M200,1600 L200,700 A500,500 0 0 1 1200,700 L1200,1600 Z" fill="#F4EEE3"/><path d="M700,732 C760,900 900,972 900,1092 A200,200 0 0 1 500,1092 C500,972 640,900 700,732 Z" fill="#E0A62B"/></svg>
           <div class="ename">Digitali engine</div>
-          <div class="esteps"><span>Read</span><span>Check</span><span>Structure</span></div>
+          <div class="esteps"><span>Prepare</span><span>Read</span><span>Validate</span><span>Flag</span></div>
         </div>
         <div class="link"></div>
         <div class="nebius"><b>Nebius Token Factory</b><span>Open vision models</span></div>
@@ -219,6 +228,24 @@ aside.notes{display:none}
     </div>
   </div>
   <aside class="notes">Inputs come from wherever staff already are: WhatsApp, Telegram, the organisation's own app, web upload or email. The Digitali engine is the product: it reads the document against the organisation's template, checks it against their reference lists, and structures it. The AI itself runs on open vision models on Nebius Token Factory. Output goes wherever it is needed: spreadsheets, their own systems through the API, a database, dashboards and reports.</aside>
+</section>
+
+<!-- 7b ENGINE -->
+<section class="slide">
+  <div class="center">
+    <div class="label">Inside the engine</div>
+    <h2 class="big" style="font-size:64px">One engine. Any form. Add a template, not code.</h2>
+    <div class="esix">
+      <div><span class="n">01</span><h3>Prepare</h3><p>Straightens the photo, strips GPS and metadata. In memory only.</p></div>
+      <div><span class="n">02</span><h3>Template</h3><p>The organisation's own form: fields, hints, reference lists.</p></div>
+      <div><span class="n">03</span><h3>Guard</h3><p>Text in the photo is data, never instructions.</p></div>
+      <div class="ai"><span class="n">04</span><h3>Read</h3><p>Open vision model on Nebius returns strict JSON.</p></div>
+      <div><span class="n">05</span><h3>Validate</h3><p>Only the template's fields, in the right types.</p></div>
+      <div><span class="n">06</span><h3>Flag</h3><p>Unreadable or unknown values go to a person.</p></div>
+    </div>
+    <div class="eout"><span class="k">Output</span><code>{"records": [{"id": 1042, "signed": true, "amount": 1380}], "flags": [{"record": 0, "field": "amount", "reason": "unreadable"}]}</code></div>
+  </div>
+  <aside class="notes">This is what the engine does today, in code. A template is a small JSON file: the fields to read, a hint per field and the organisation's reference lists (member IDs, order numbers). New document type means a new template, not new code. The prompt wording is plain Markdown the team can edit. The photo is fixed, stripped of location data and never stored. User notes and text in the photo can never change the rules or the output format. The model on Token Factory must return JSON in the template's schema; the engine then keeps only valid fields and types, and flags anything unreadable or not in the reference list for a person to check. Same pipeline runs the eval, so the numbers on the proof slide are the real thing.</aside>
 </section>
 
 <!-- 8 DEMO -->
