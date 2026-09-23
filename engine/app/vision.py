@@ -89,6 +89,9 @@ def _coerce(value: Any, type_: str | None) -> Any:
     """Returns `value` as the schema type, or None if it is not one (so it gets flagged as unreadable)."""
     if value is None or type_ is None:
         return value
+    # Models sometimes write "null" or "n/a" as text instead of leaving a field empty.
+    if isinstance(value, str) and value.strip().lower() in {"", "null", "none", "n/a", "na", "-"}:
+        return None
     if type_ in ("integer", "number") and isinstance(value, str):
         try:
             value = float(value.strip())

@@ -1,3 +1,4 @@
+import copy
 import io
 import json
 from types import SimpleNamespace
@@ -407,3 +408,53 @@ def test_extract_still_succeeds_when_saving_fails(fake_model, supabase, monkeypa
 def test_extract_rejects_unknown_source():
     files = {"image": ("photo.jpg", make_image(), "image/jpeg")}
     assert client.post("/extract", files=files, data={"template_id": "delivery-note", "source": "x"}).status_code == 422
+
+
+# --- dashboard ---
+
+DASHBOARD_ROWS = {
+    "totals": {"uploads": 2, "records": 6, "flags": 2, "confirmed": 0, "avg_latency_ms": 1500},
+    "per_day": [{"day": "2026-09-23", "uploads": 2, "records": 6}],
+    "fields": [
+        {"field": "name", "records": 6, "empty": 0, "flagged": 0, "true": 0, "false": 0, "distinct": 6,
+         "top": [{"value": "Amina", "count": 1}]},
+        {"field": "role", "records": 6, "empty": 0, "flagged": 0, "true": 0, "false": 0, "distinct": 2,
+         "top": [{"value": "Member", "count": 4}, {"value": "Chair", "count": 2}]},
+    ],
+    "recent": [],
+}
+
+
+def test_dashboard(supabase, monkeypatch):
+    def post(url, json, headers, timeout):
+        supabase.append({"url": url, "json": json})
+        return SimpleNamespace(raise_for_status=lambda: None, json=lambda: copy.deepcopy(DASHBOARD_ROWS))
+
+    monkeypatch.setattr(app.storage.httpx, "post", post)
+    res = client.get("/dashboard", params={"template_id": "attendance", "days": 7})
+    assert res.status_code == 200
+    body = res.json()
+    assert supabase[-1]["url"].endswith("/rpc/dashboard")
+    assert supabase[-1]["json"]["p_template_id"] == "attendance"
+    assert body["template"]["name"] == "Attendance sheet"
+    assert [f["name"] for f in body["template"]["fields"]] == ["name", "role", "phone", "signed"]
+    fields = {f["field"]: f for f in body["fields"]}
+    assert fields["name"]["top"] == []  # unique values (names) are never passed on
+    assert fields["role"]["top"][0] == {"value": "Member", "count": 4}
+
+
+def test_dashboard_requires_database():
+    assert client.get("/dashboard").status_code == 503
+
+
+def test_dashboard_requires_api_key_when_configured(monkeypatch):
+    monkeypatch.setattr(settings, "engine_api_key", "secret")
+    assert client.get("/dashboard").status_code == 401
+
+
+@pytest.mark.parametrize("text", ["null", "None", " N/A ", "", "-"])
+def test_enforce_schema_treats_placeholder_text_as_empty(text):
+    t = app.main.templates["attendance"]
+    [record] = app.vision.enforce_schema([{"name": "Amina", "role": text, "signed": True}], t)
+    assert record["role"] is None
+    assert record["name"] == "Amina"

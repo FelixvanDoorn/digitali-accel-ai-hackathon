@@ -4,9 +4,10 @@ import secrets
 import time
 import uuid
 from contextlib import asynccontextmanager
+from datetime import datetime, timedelta, timezone
 from typing import Any, Literal
 
-from fastapi import FastAPI, Form, Header, HTTPException, UploadFile
+from fastapi import FastAPI, Form, Header, HTTPException, Query, UploadFile
 from fastapi.concurrency import run_in_threadpool
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -14,7 +15,7 @@ from pydantic import BaseModel
 from app.config import ConfigError, check_model_config, settings
 from app.images import InvalidImage, PreparedImage, prepare
 from app.instructions import InvalidInstructions, clean_instructions
-from app.storage import store_extraction
+from app.storage import fetch_dashboard, storage_configured, store_extraction
 from app.templates import Template, load_templates
 from app.vision import VisionError, read_image
 
@@ -109,6 +110,48 @@ def list_templates() -> list[TemplateSummary]:
     return [TemplateSummary(id=t.id, name=t.name, description=t.description) for t in templates.values()]
 
 
+def require_api_key(x_api_key: str | None) -> None:
+    if settings.engine_api_key and not secrets.compare_digest(x_api_key or "", settings.engine_api_key):
+        raise HTTPException(401, "Missing or wrong X-API-Key")
+
+
+@app.get("/dashboard")
+async def dashboard(
+    template_id: str = Query("attendance"),
+    days: int = Query(30, ge=0, le=3650, description="0 means all time"),
+    x_api_key: str | None = Header(None),
+) -> dict[str, Any]:
+    """Numbers for the dashboard: totals, uploads per day, per-field stats and the latest uploads."""
+    require_api_key(x_api_key)
+    template = templates.get(template_id)
+    if template is None:
+        raise HTTPException(404, f"Unknown template: {template_id}")
+    if not storage_configured():
+        raise HTTPException(503, "The database is not configured (SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)")
+
+    since = datetime.now(timezone.utc) - timedelta(days=days) if days else datetime(2000, 1, 1, tzinfo=timezone.utc)
+    try:
+        data = await run_in_threadpool(fetch_dashboard, template_id, since.isoformat())
+    except Exception as e:  # noqa: BLE001 - any database failure is a 502 for the caller
+        log.warning("dashboard template=%s failed: %s", template_id, e)
+        raise HTTPException(502, "Could not load the dashboard from the database") from e
+
+    return {
+        "template": {
+            "id": template.id,
+            "name": template.name,
+            "fields": [
+                {"name": name, "type": spec.get("type", "string"), "hint": template.fields.get(name, {}).get("hint", "")}
+                for name, spec in template.schema_.get("properties", {}).items()
+            ],
+        },
+        "templates": [{"id": t.id, "name": t.name} for t in templates.values()],
+        "days": days,
+        "since": since.isoformat(),
+        **data,
+    }
+
+
 @app.post("/extract")
 async def extract(
     image: UploadFile,
@@ -119,8 +162,7 @@ async def extract(
 ) -> ExtractResponse:
     started = time.perf_counter()
 
-    if settings.engine_api_key and not secrets.compare_digest(x_api_key or "", settings.engine_api_key):
-        raise HTTPException(401, "Missing or wrong X-API-Key")
+    require_api_key(x_api_key)
 
     template = templates.get(template_id)
     if template is None:
