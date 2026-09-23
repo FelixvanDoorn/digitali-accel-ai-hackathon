@@ -1,11 +1,12 @@
 import json
 import logging
+import secrets
 import time
 import uuid
 from contextlib import asynccontextmanager
-from typing import Any
+from typing import Any, Literal
 
-from fastapi import FastAPI, Form, HTTPException, UploadFile
+from fastapi import FastAPI, Form, Header, HTTPException, UploadFile
 from fastapi.concurrency import run_in_threadpool
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -13,6 +14,7 @@ from pydantic import BaseModel
 from app.config import ConfigError, check_model_config, settings
 from app.images import InvalidImage, PreparedImage, prepare
 from app.instructions import InvalidInstructions, clean_instructions
+from app.storage import store_extraction
 from app.templates import Template, load_templates
 from app.vision import VisionError, read_image
 
@@ -54,6 +56,7 @@ class ExtractMeta(BaseModel):
     image_width: int
     image_height: int
     instructions: str | None  # as cleaned and sent to the model
+    upload_id: str | None = None  # id in Supabase, or None if not saved
 
 
 class ExtractResponse(BaseModel):
@@ -108,9 +111,16 @@ def list_templates() -> list[TemplateSummary]:
 
 @app.post("/extract")
 async def extract(
-    image: UploadFile, template_id: str = Form(...), instructions: str | None = Form(None)
+    image: UploadFile,
+    template_id: str = Form(...),
+    instructions: str | None = Form(None),
+    source: Literal["web", "api"] = Form("api"),
+    x_api_key: str | None = Header(None),
 ) -> ExtractResponse:
     started = time.perf_counter()
+
+    if settings.engine_api_key and not secrets.compare_digest(x_api_key or "", settings.engine_api_key):
+        raise HTTPException(401, "Missing or wrong X-API-Key")
 
     template = templates.get(template_id)
     if template is None:
@@ -157,6 +167,28 @@ async def extract(
             image_height=prepared.height,
             instructions=instructions,
         ),
+    )
+    response.meta.upload_id = await run_in_threadpool(
+        store_extraction,
+        {
+            "template_id": template_id,
+            "source": source,
+            "instructions": instructions,
+            "model": result.model,
+            "structured_output": result.structured_output,
+            "latency_ms": latency_ms,
+            "prompt_tokens": result.prompt_tokens,
+            "completion_tokens": result.completion_tokens,
+            "image_width": prepared.width,
+            "image_height": prepared.height,
+            "image_format": prepared.source_format,
+            "record_count": len(records),
+            "flag_count": len(flags),
+        },
+        [
+            {"data": record, "flags": [{"field": f.field, "reason": f.reason} for f in flags if f.record == i]}
+            for i, record in enumerate(records)
+        ],
     )
     if settings.save_uploads_dir:
         save_upload(prepared, response)

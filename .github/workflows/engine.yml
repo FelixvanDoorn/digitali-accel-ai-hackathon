@@ -1,0 +1,87 @@
+# Tests the engine and deploys it to its Vercel project (digitali-engine):
+#   pull request -> tests + preview deployment (URL in the job summary)
+#   push to main -> tests + production deployment (https://digitali-engine.vercel.app)
+# The website deploys itself through its own Vercel Git integration.
+#
+# Repository secrets: VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID (IDs are in engine/.vercel/project.json).
+
+name: Engine
+
+on:
+  push:
+    branches: [main]
+    paths: [engine/**, templates/**, prompts/**, .github/workflows/engine.yml]
+  pull_request:
+    paths: [engine/**, templates/**, prompts/**, .github/workflows/engine.yml]
+  workflow_dispatch:
+
+concurrency:
+  group: engine-${{ github.event.pull_request.number || github.ref }}
+  # Never cancel a production deploy halfway; superseded PR runs can go.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: engine
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --frozen
+      - run: uv run pytest -q
+
+  deploy:
+    needs: test
+    # Pull requests from forks get no secrets, so they only run the tests.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: engine
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      TARGET: ${{ github.event_name == 'pull_request' && 'preview' || 'production' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Deploy
+        id: deploy
+        run: |
+          set -o pipefail
+          flag=""
+          [ "$TARGET" = preview ] && flag="--preview"
+          scripts/deploy_vercel.sh $flag | tee deploy.log
+          url="$(sed -n 's/^DEPLOYMENT_URL=//p' deploy.log)"
+          [ -n "$url" ] || { echo "::error::No deployment URL in the Vercel output"; exit 1; }
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+      - name: Check health
+        env:
+          URL: ${{ steps.deploy.outputs.url }}
+        run: |
+          # vercel curl gets past Deployment Protection, which guards preview and per-deployment URLs.
+          # vercel curl forwards --token to curl itself, so the CLI takes the token from $VERCEL_TOKEN.
+          for attempt in 1 2 3 4 5; do
+            output="$(npx --yes vercel@59 curl /health --deployment "$URL" 2>&1 || true)"
+            echo "$output" | grep -v -E "^npm warn" | tail -n 5
+            health="$(echo "$output" | tail -n 1)"
+            if echo "$health" | jq -e '.model_configured == true' >/dev/null 2>&1; then
+              echo "### Engine $TARGET deployment" >> "$GITHUB_STEP_SUMMARY"
+              echo "$URL (healthy)" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "::error::$URL/health did not report a configured model"
+          exit 1

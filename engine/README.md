@@ -36,6 +36,19 @@ The wording sent to the model lives in `../prompts/` as plain Markdown, so anyon
 
 Keep the `{{placeholders}}` spelled as they are; the engine fills them in from the template. Edits apply to the next request, no restart needed. Run the eval to check a change actually helps.
 
+## Database
+
+When `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are set, every `/extract` saves one row in `uploads` (template, model, timing, image size, counts) and one row per record in `records` (the record as JSON, plus its flags). Photos are never stored. A failed save is logged and does not fail the extraction; the response's `meta.upload_id` is then `null`.
+
+The tables are defined in `../db/migrations/`. To change them, add a numbered SQL file and apply it:
+
+```sh
+npx vercel env pull .env.local --environment production   # from engine/, once
+uv run --with "psycopg[binary]" python ../db/migrate.py
+```
+
+The fields inside each record are defined by the template's `schema` (`../templates/*.json`), not by the database.
+
 ## Test
 
 The tests mock Token Factory, so they need no API key.

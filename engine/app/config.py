@@ -6,6 +6,13 @@ ENGINE_DIR = Path(__file__).resolve().parents[1]
 REPO_DIR = ENGINE_DIR.parent
 
 
+def _shared_dir(name: str) -> Path:
+    """templates/ and prompts/ live at the repo root; deploys that only upload engine/ (Vercel) copy them
+    into engine/ first (scripts/deploy_vercel.sh)."""
+    bundled = ENGINE_DIR / name
+    return bundled if bundled.is_dir() else REPO_DIR / name
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=ENGINE_DIR / ".env", extra="ignore", env_ignore_empty=True)
 
@@ -19,8 +26,13 @@ class Settings(BaseSettings):
     allowed_origins: list[str] = ["http://localhost:5173", "http://localhost:8080"]
     # Also allow origins matching this regex, e.g. every Vercel preview URL of the frontend project.
     allowed_origin_regex: str | None = None
-    templates_dir: Path = REPO_DIR / "templates"
-    prompts_dir: Path = REPO_DIR / "prompts"
+    # If set, /extract requires this value in the X-API-Key header (e.g. from the website's server).
+    engine_api_key: str = ""
+    # Supabase, set by the Vercel integration. Empty means uploads are not saved.
+    supabase_url: str = ""
+    supabase_service_role_key: str = ""
+    templates_dir: Path = _shared_dir("templates")
+    prompts_dir: Path = _shared_dir("prompts")
     # Empty means photos are never stored. Set a folder to keep uploads (e.g. for building the eval set).
     save_uploads_dir: Path | None = None
 

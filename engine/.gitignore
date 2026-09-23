@@ -3,3 +3,10 @@ __pycache__/
 .pytest_cache/
 .env
 uploads/
+# Copies made by scripts/deploy_vercel.sh for the upload
+/templates/
+/prompts/
+/requirements.txt
+.vercel
+.env*
+!.env.example
