@@ -1,0 +1,14 @@
+{
+  "records": [
+    {
+      "id": 1040,
+      "signed": true,
+      "amount": 1671.07
+    }
+  ],
+  "variant": {
+    "rotation": -6.4,
+    "blur": 1.0,
+    "font": "comic"
+  }
+}

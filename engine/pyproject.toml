@@ -1,0 +1,23 @@
+[project]
+name = "digitali-engine"
+version = "0.1.0"
+description = "Digitali engine: photo of a paper form in, structured JSON out"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.141.1",
+    "openai>=3.19.0",
+    "pillow>=12.3.0",
+    "pillow-heif>=1.8.0",
+    "pydantic-settings>=2.15.0",
+    "python-multipart>=0.0.32",
+    "uvicorn[standard]>=0.53.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]

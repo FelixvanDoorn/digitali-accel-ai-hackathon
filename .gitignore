@@ -1,2 +1,11 @@
 .vercel
 .env*
+
+# Secrets: never commit API keys
+nebius_token.env
+*.env
+.env
+!*.env.example
+
+# Local runs and saved uploads
+eval/results/
