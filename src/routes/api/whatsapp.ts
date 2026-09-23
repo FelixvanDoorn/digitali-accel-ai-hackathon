@@ -83,8 +83,13 @@ export const Route = createFileRoute("/api/whatsapp")({
           if (accountSid && token && new URL(mediaUrl).hostname.endsWith("twilio.com")) {
             headers["Authorization"] = `Basic ${Buffer.from(`${accountSid}:${token}`).toString("base64")}`;
           }
-          const media = await fetch(mediaUrl, { headers, redirect: "follow" });
-          if (!media.ok) throw new Error(`media ${media.status}`);
+          // Twilio answers the media URL with a redirect to its CDN; follow it without our credentials.
+          let media = await fetch(mediaUrl, { headers, redirect: "manual" });
+          const location = media.headers.get("location");
+          if (media.status >= 300 && media.status < 400 && location) {
+            media = await fetch(new URL(location, mediaUrl).toString());
+          }
+          if (!media.ok) throw new Error(`media download ${media.status}`);
           const bytes = new Uint8Array(await media.arrayBuffer());
 
           const body = new FormData();
@@ -100,8 +105,9 @@ export const Route = createFileRoute("/api/whatsapp")({
           if (!response.ok) throw new Error(`engine ${response.status}: ${(await response.text()).slice(0, 200)}`);
           return twiml(formatReply((await response.json()) as EngineResponse));
         } catch (error) {
-          console.error("WhatsApp intake failed", error);
-          return twiml("Sorry, I could not read that photo. Please try again with the whole sheet in view.");
+          const reason = error instanceof Error ? error.message : String(error);
+          console.error(`WA-FAIL ${reason}`);
+          return twiml(`Sorry, I could not read that photo. Please try again with the whole sheet in view. (${reason.slice(0, 120)})`);
         }
       },
     },
