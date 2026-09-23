@@ -43,7 +43,7 @@ const IMG = {
   portrait: "https://images.unsplash.com/photo-1633591640507-aeb0fab6a7bc",
   group: "https://images.unsplash.com/photo-1593114638431-5805138c696e",
   meeting: "https://images.unsplash.com/photo-1637149014802-d917e6255c2d",
-  night: "https://images.unsplash.com/photo-1775642549793-6c94f764b227",
+  night: "https://images.unsplash.com/photo-1765648496267-a0b528fb97fb",
   register: "https://images.unsplash.com/photo-1604292771492-1aee47c1456b",
 };
 
@@ -119,7 +119,7 @@ function Index() {
         <div className="story-strip">
           <ArchPhoto compact src={IMG.meeting} alt="A group meeting under a tree" position="center 40%" caption="Every meeting ends on paper." />
           <ArrowRight aria-hidden="true" />
-          <ArchPhoto compact src={IMG.night} alt="Admin work late in the evening" position="center 40%" caption="Her evenings go to retyping." />
+          <ArchPhoto compact src={IMG.night} alt="A field officer typing up paper records at a branch office" position="center 40%" caption="Back at the branch, hours go to retyping." />
           <ArrowRight aria-hidden="true" />
           <ArchPhoto compact src={IMG.register} alt="A handwritten register" caption="Her manager decides weeks later." />
         </div>
@@ -171,7 +171,7 @@ function Index() {
         <p className="pitch-note">The full deck is one click away: <a className="text-link" href="/pitch-deck/index.html">open the pitch deck <ArrowRight /></a></p>
       </section>
 
-      <footer><div className="footer-inner"><div className="footer-brand"><BrandLockup inverse /><p>Kutoka karatasi hadi data<br/><span>From paper to data</span></p></div><div className="footer-links"><a href="#how">How it works</a><a href="#who">Who it's for</a><a href="#pricing">Pricing</a><a href="/pitch-deck/index.html">Pitch deck</a><a href="#demo">Try it</a></div><p className="asante">Asante.</p><p className="credits">Photos: Unsplash (Favour Anyula, Oscar Omondi, Christian Agbede, Mick Haupt, Ahadi Lugo). Asha is a persona.</p></div></footer>
+      <footer><div className="footer-inner"><div className="footer-brand"><BrandLockup inverse /><p>Kutoka karatasi hadi data<br/><span>From paper to data</span></p></div><div className="footer-links"><a href="#how">How it works</a><a href="#who">Who it's for</a><a href="#pricing">Pricing</a><a href="/pitch-deck/index.html">Pitch deck</a><a href="#demo">Try it</a></div><p className="asante">Asante.</p><p className="credits">Photos: Unsplash (Favour Anyula, Oscar Omondi, Fotografía Editorial, Mick Haupt, Ahadi Lugo). Asha is a persona.</p></div></footer>
     </main>
   );
 }
