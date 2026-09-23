@@ -49,7 +49,7 @@ async function extractViaEngine(engineUrl: string, data: z.infer<typeof inputSch
     const flagged = new Set((payload.flags ?? []).filter((f) => f.record === index).map((f) => f.field));
     const text = (field: "name" | "role" | "phone") => {
       const value = raw[field];
-      if (value === null || value === undefined) {
+      if (value === null || value === undefined || /^\s*(null|none|n\/a)?\s*$/i.test(String(value))) {
         flagged.add(field);
         return "";
       }
