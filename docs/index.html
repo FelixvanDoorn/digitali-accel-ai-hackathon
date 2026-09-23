@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digitali</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--ink:#111;--muted:#6b6b6b;--line:#e6e6e6;--soft:#f6f6f5;--accent:#0f6e5c;--accent-soft:#e7f2ef;--tbd:#fff4d6;--tbd-ink:#8a5a00}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#fafafa;font-family:Inter,system-ui,sans-serif;color:var(--ink);overflow:hidden}
+#viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#stage{width:1600px;height:900px;position:relative;transform-origin:center center;flex:none}
+.slide{position:absolute;inset:0;background:var(--bg);padding:96px 112px;display:none;flex-direction:column;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.slide.active{display:flex}
+.kicker{font-size:18px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:24px}
+h1{font-size:120px;font-weight:800;letter-spacing:-.04em;line-height:1}
+h2{font-size:60px;font-weight:700;letter-spacing:-.025em;line-height:1.08;max-width:1300px}
+.lead{font-size:30px;line-height:1.45;color:var(--muted);max-width:1200px;margin-top:28px}
+.body{margin-top:56px;flex:1;display:flex;flex-direction:column}
+.cols{display:grid;gap:28px}
+.c2{grid-template-columns:1fr 1fr}.c3{grid-template-columns:repeat(3,1fr)}.c4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--soft);border-radius:18px;padding:36px}
+.card .n{font-size:16px;font-weight:600;color:var(--accent);letter-spacing:.06em;text-transform:uppercase}
+.card h3{font-size:34px;font-weight:700;margin:10px 0 14px;letter-spacing:-.01em}
+.card p{font-size:23px;line-height:1.45;color:#444}
+.big{font-size:88px;font-weight:800;letter-spacing:-.03em;color:var(--accent);line-height:1}
+.cap{font-size:22px;color:var(--muted);margin-top:12px;line-height:1.4}
+ul.list{list-style:none;display:flex;flex-direction:column;gap:22px}
+ul.list li{font-size:28px;line-height:1.4;padding-left:36px;position:relative}
+ul.list li::before{content:"";position:absolute;left:0;top:15px;width:14px;height:14px;border-radius:3px;background:var(--accent)}
+.flow{display:grid;grid-template-columns:1fr 60px 1fr 60px 1fr;align-items:stretch}
+.arrow{display:flex;align-items:center;justify-content:center;color:#bbb;font-size:36px}
+code,.mono{font-family:"JetBrains Mono",monospace}
+.json{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px;font-size:19px;margin-top:16px;color:#333;line-height:1.5}
+table{width:100%;border-collapse:collapse;font-size:26px}
+th{text-align:left;font-size:17px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:0 20px 18px;border-bottom:2px solid var(--ink)}
+td{padding:22px 20px;border-bottom:1px solid var(--line)}
+td.num{font-variant-numeric:tabular-nums}
+tr.win td{background:var(--accent-soft);font-weight:600}
+.tbd{background:var(--tbd);color:var(--tbd-ink);border-radius:6px;padding:1px 8px;font-weight:600;font-size:.9em}
+.crit{position:absolute;left:112px;bottom:48px;font-size:16px;color:#9a9a9a;letter-spacing:.02em}
+.crit b{color:var(--accent);font-weight:600}
+.foot{position:absolute;right:112px;bottom:48px;font-size:16px;color:#9a9a9a;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:6px 16px;font-size:18px;font-weight:600;margin-right:10px}
+.person{display:flex;flex-direction:column;gap:8px}
+.avatar{width:96px;height:96px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:700;margin-bottom:16px}
+aside.notes{display:none}
+#notes{position:fixed;left:0;right:0;bottom:0;background:#111;color:#eee;font-size:15px;line-height:1.5;padding:14px 20px;display:none;max-height:30vh;overflow:auto;z-index:5}
+#nav{position:fixed;right:16px;bottom:12px;display:flex;gap:6px;z-index:6}
+#nav button{border:1px solid var(--line);background:#fff;border-radius:8px;width:40px;height:36px;font-size:18px;cursor:pointer;color:#444}
+</style>
+</head>
+<body>
+<div id="viewport"><div id="stage">
+
+<!-- 1 TITLE -->
+<section class="slide" data-crit="">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+    <div class="kicker">Accel AI Hackathon · Nebius Token Factory</div>
+    <h1>Digitali</h1>
+    <p class="lead" style="font-size:40px;color:var(--ink);margin-top:36px">Paper in. Structured data out.<br>From a single photo.</p>
+    <p class="lead">Finn · Felix · Elif</p>
+  </div>
+  <aside class="notes">Open with the problem, not the tech. One sentence: field organisations run on paper and decide blind; Digitali turns the paper they already use into data.</aside>
+</section>
+
+<!-- 2 PROBLEM -->
+<section class="slide" data-crit="Problem and company potential">
+  <div class="kicker">The problem</div>
+  <h2>Field organisations want to decide on data. Their data is still on paper.</h2>
+  <div class="body">
+    <div class="cols c3">
+      <div class="card"><div class="n">Every day</div><h3>Paper forms</h3><p>Field staff record meetings, attendance, payments and visits on sheets they have used for years.</p></div>
+      <div class="card"><div class="n">Every week</div><h3>Retyped by hand</h3><p>Office staff copy the sheets into a system or spreadsheet. Slow, costly, full of typos.</p></div>
+      <div class="card"><div class="n">Every month</div><h3>Decisions late</h3><p>Management sees the numbers days or weeks later, if the data arrives at all.</p></div>
+    </div>
+    <p class="lead" style="margin-top:44px">New apps and tablets fail on cost, rollout and frontline adoption. So the paper stays.</p>
+  </div>
+  <aside class="notes">Field heavy organisations: NGOs, cooperatives, lenders with many branches. The bottleneck is data input, not analytics.</aside>
+</section>
+
+<!-- 3 USER -->
+<section class="slide" data-crit="Product and user value">
+  <div class="kicker">The user</div>
+  <h2>The field officer who fills in the sheet, and the manager who needs it.</h2>
+  <div class="body">
+    <div class="cols c2" style="gap:64px">
+      <div>
+        <ul class="list">
+          <li><b>How often:</b> after every meeting or visit, several times a week per officer.</li>
+          <li><b>Today:</b> paper to office, then manual entry, then a spreadsheet.</li>
+          <li><b>Would they pay:</b> the organisation pays for data entry already, in staff hours.</li>
+        </ul>
+      </div>
+      <div class="cols c2" style="gap:18px">
+        <div class="card" style="padding:28px"><h3 style="font-size:26px;margin-top:0">No more retyping</h3><p style="font-size:20px">Data entry disappears.</p></div>
+        <div class="card" style="padding:28px"><h3 style="font-size:26px;margin-top:0">Instant receipt</h3><p style="font-size:20px">Officer gets a summary back: who paid, who is missing.</p></div>
+        <div class="card" style="padding:28px"><h3 style="font-size:26px;margin-top:0">Fewer disputes</h3><p style="font-size:20px">A timestamped record settles "I paid".</p></div>
+        <div class="card" style="padding:28px"><h3 style="font-size:26px;margin-top:0">Same day numbers</h3><p style="font-size:20px">Managers see targets the day they happen.</p></div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">The officer must gain something, or the photos stop in week three. The receipt and dispute record are the officer's reasons; same day numbers are the manager's.</aside>
+</section>
+
+<!-- 4 PRODUCT -->
+<section class="slide" data-crit="Product and user value">
+  <div class="kicker">The product</div>
+  <h2>Staff keep their paper. They only take a photo.</h2>
+  <div class="body">
+    <div class="flow">
+      <div class="card"><div class="n">1 Input</div><h3>Photo</h3><p>Any form, sheet or log the operation already uses. Web upload now, messaging apps next.</p></div>
+      <div class="arrow">→</div>
+      <div class="card" style="background:var(--accent-soft)"><div class="n">2 Engine</div><h3>Vision model</h3><p>Open model on Nebius Token Factory reads the photo and matches rows against the company's own reference list.</p></div>
+      <div class="arrow">→</div>
+      <div class="card"><div class="n">3 Output</div><h3>Structured data</h3><div class="json mono">{"id": 1042,<br>&nbsp;"signed": true,<br>&nbsp;"amount": 1380}</div></div>
+    </div>
+    <div style="margin-top:40px"><span class="pill">API: plug the engine into your system</span><span class="pill">Web tool: upload, review, export</span></div>
+  </div>
+  <aside class="notes">Two ways to use it: integration via API, or our web tool for organisations without IT capacity. Setup is one template: which fields, which reference list.</aside>
+</section>
+
+<!-- 5 DEMO -->
+<section class="slide" data-crit="Demo">
+  <div class="kicker">Live demo</div>
+  <h2>A handwritten sheet, photographed a minute ago.</h2>
+  <div class="body" style="justify-content:center">
+    <div class="cols c4">
+      <div class="card"><div class="big">1</div><p style="margin-top:16px">Upload the photo of a hand filled sheet</p></div>
+      <div class="card"><div class="big">2</div><p style="margin-top:16px">Engine returns one row per person, matched to the reference list</p></div>
+      <div class="card"><div class="big">3</div><p style="margin-top:16px">Low confidence fields flagged, corrected in one click</p></div>
+      <div class="card"><div class="big">4</div><p style="margin-top:16px">Export as CSV or JSON, or send via API</p></div>
+    </div>
+    <p class="lead" style="margin-top:44px">Demo link: <span class="tbd">app URL</span></p>
+  </div>
+  <aside class="notes">Keep the demo under 90 seconds. Have a backup screen recording in case the network fails.</aside>
+</section>
+
+<!-- 6 MODELS -->
+<section class="slide" data-crit="Technical execution and Token Factory use">
+  <div class="kicker">Models on Nebius Token Factory</div>
+  <h2>A small open vision model does the reading. A larger one checks it.</h2>
+  <div class="body">
+    <table>
+      <thead><tr><th style="width:34%">Model</th><th style="width:22%">Role</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tbd">small vision model</span></td><td>Extraction</td><td>Reads the photo into JSON against the template. Cheapest model that passes the test set.</td></tr>
+        <tr><td><span class="tbd">large vision model</span></td><td>Benchmark and fallback</td><td>Used to measure the small model, and on rows the small model flags as uncertain.</td></tr>
+        <tr><td><span class="tbd">text model (optional)</span></td><td>Matching and validation</td><td>Matches names to reference IDs and checks totals.</td></tr>
+      </tbody>
+    </table>
+    <p class="lead" style="font-size:24px;margin-top:36px">All models run on Token Factory through its OpenAI compatible API. No closed models used.</p>
+  </div>
+  <aside class="notes">Name exact model IDs once confirmed with the /v1/models call. Explain why two models: cost on the common case, quality on the hard case.</aside>
+</section>
+
+<!-- 7 MEASUREMENT -->
+<section class="slide" data-crit="Measurable model advantage">
+  <div class="kicker">Measurable advantage</div>
+  <h2>Small vs large open model, on the same test set.</h2>
+  <div class="body">
+    <table>
+      <thead><tr><th>Model</th><th>Field accuracy</th><th>Cost per page</th><th>Latency</th></tr></thead>
+      <tbody>
+        <tr class="win"><td><span class="tbd">small</span></td><td class="num"><span class="tbd">%</span></td><td class="num"><span class="tbd">$</span></td><td class="num"><span class="tbd">s</span></td></tr>
+        <tr><td><span class="tbd">large</span></td><td class="num"><span class="tbd">%</span></td><td class="num"><span class="tbd">$</span></td><td class="num"><span class="tbd">s</span></td></tr>
+      </tbody>
+    </table>
+    <p class="lead" style="font-size:24px;margin-top:36px">Test set: 20 synthetic sheets with ground truth, plus 5 filled in by hand and photographed on a phone. Field accuracy = share of fields exactly right. Eval sheet: <span class="tbd">repo link</span></p>
+  </div>
+  <aside class="notes">A rough measurement with real numbers beats a polished claim. Say the headline: X percent of the accuracy at Y times lower cost.</aside>
+</section>
+
+<!-- 8 RESPONSIBLE -->
+<section class="slide" data-crit="Responsible design">
+  <div class="kicker">Responsible design</div>
+  <h2>The model proposes. A person confirms.</h2>
+  <div class="body">
+    <div class="cols c3">
+      <div class="card"><div class="n">Privacy</div><h3>No photos kept</h3><p>Images are processed and discarded. Only the confirmed fields are stored. Test data is synthetic.</p></div>
+      <div class="card"><div class="n">Errors</div><h3>Human in the loop</h3><p>Nothing is saved until a person reviews it. Low confidence fields are flagged, every field is editable.</p></div>
+      <div class="card"><div class="n">Misuse</div><h3>Fixed task</h3><p>The engine only fills a predefined template. No free text generation, no decisions about people.</p></div>
+    </div>
+  </div>
+  <aside class="notes">Emphasise: the model never makes a decision about a person, it only transcribes.</aside>
+</section>
+
+<!-- 9 COMPANY -->
+<section class="slide" data-crit="Problem and company potential">
+  <div class="kicker">Why this is a company</div>
+  <h2>Every paper heavy organisation is a customer. Every template makes the next one faster.</h2>
+  <div class="body">
+    <div class="cols c3">
+      <div class="card"><div class="n">Market</div><h3>Field organisations</h3><p>NGOs, cooperatives, lenders and public services with many branches and paper processes.</p></div>
+      <div class="card"><div class="n">Model</div><h3>Margin on usage</h3><p>Pay as you go per page, priced above model cost and well below manual entry. Larger clients sign usage contracts with committed monthly volume. <span class="tbd">price</span></p></div>
+      <div class="card"><div class="n">Moat</div><h3>Template library</h3><p>Each customer form becomes a reusable template, and corrections improve accuracy over time.</p></div>
+    </div>
+  </div>
+  <aside class="notes">Two revenue lines: margin on pay as you go usage, and usage contracts with committed volume for larger clients. Set the price once the eval gives cost per page. Next steps: WhatsApp intake, direct integrations, template builder.</aside>
+</section>
+
+<!-- 10 TEAM -->
+<section class="slide" data-crit="">
+  <div class="kicker">Team</div>
+  <h2>Digitali</h2>
+  <div class="body">
+    <div class="cols c3">
+      <div class="person"><div class="avatar">F</div><h3 style="font-size:36px">Finn</h3><p class="cap">Product and pitch</p></div>
+      <div class="person"><div class="avatar">F</div><h3 style="font-size:36px">Felix</h3><p class="cap">Backend and engine</p></div>
+      <div class="person"><div class="avatar">E</div><h3 style="font-size:36px">Elif</h3><p class="cap">Frontend</p></div>
+    </div>
+    <p class="lead" style="margin-top:auto">github.com/FelixvanDoorn/accel-ai-hackathon</p>
+  </div>
+  <aside class="notes">Close with the one line: paper in, structured data out.</aside>
+</section>
+
+</div></div>
+<div id="notes"></div>
+<div id="nav"><button id="prev" aria-label="Previous">‹</button><button id="next" aria-label="Next">›</button></div>
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide')),i=0,stage=document.getElementById('stage'),notes=document.getElementById('notes'),showNotes=false;
+  slides.forEach(function(s,k){
+    var c=s.getAttribute('data-crit');
+    if(c){var d=document.createElement('div');d.className='crit';d.innerHTML='Criterion: <b>'+c+'</b>';s.appendChild(d);}
+    var f=document.createElement('div');f.className='foot';f.textContent=(k+1)+' / '+slides.length;s.appendChild(f);
+  });
+  function fit(){var s=Math.min(window.innerWidth/1600,window.innerHeight/900);stage.style.transform='scale('+s+')';}
+  function go(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach(function(s,k){s.classList.toggle('active',k===i)});var a=slides[i].querySelector('aside.notes');notes.textContent=a?a.textContent:'';notes.style.display=showNotes&&a?'block':'none';try{history.replaceState(null,'','#'+(i+1))}catch(e){}}
+  document.addEventListener('keydown',function(e){
+    if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>-1){e.preventDefault();go(i+1)}
+    else if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>-1){e.preventDefault();go(i-1)}
+    else if(e.key==='n'||e.key==='N'){showNotes=!showNotes;go(i)}
+    else if(e.key==='f'||e.key==='F'){if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen()}
+  });
+  document.getElementById('prev').onclick=function(){go(i-1)};
+  document.getElementById('next').onclick=function(){go(i+1)};
+  window.addEventListener('resize',fit);fit();
+  var h=parseInt((location.hash||'').slice(1),10);go(isNaN(h)?0:h-1);
+})();
+</script>
+</body>
+</html>
