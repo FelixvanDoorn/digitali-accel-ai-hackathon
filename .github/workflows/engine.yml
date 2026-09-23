@@ -58,6 +58,7 @@ jobs:
       - name: Deploy
         id: deploy
         run: |
+          set -o pipefail
           flag=""
           [ "$TARGET" = preview ] && flag="--preview"
           scripts/deploy_vercel.sh $flag | tee deploy.log

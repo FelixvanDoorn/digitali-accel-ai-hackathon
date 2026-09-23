@@ -29,7 +29,15 @@ vercel() {
 
 command -v uv >/dev/null || { echo "Missing 'uv'. Install it with: brew install uv" >&2; exit 1; }
 command -v npx >/dev/null || { echo "Missing 'npx'. Install Node.js first." >&2; exit 1; }
-vercel whoami >/dev/null 2>&1 || { echo "Not logged in to Vercel. Run: npx vercel login" >&2; exit 1; }
+if ! whoami_output="$(vercel whoami 2>&1)"; then
+  echo "$whoami_output" >&2
+  if [ -n "${VERCEL_TOKEN:-}" ]; then
+    echo "Vercel rejected VERCEL_TOKEN. Check it is valid and scoped to the account that owns $PROJECT." >&2
+  else
+    echo "Not logged in to Vercel. Run: npx vercel login" >&2
+  fi
+  exit 1
+fi
 
 cleanup() { rm -rf templates prompts requirements.txt; }
 trap cleanup EXIT
