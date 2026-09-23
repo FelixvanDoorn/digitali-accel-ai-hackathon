@@ -1,0 +1,29 @@
+{
+  "records": [
+    {
+      "id": 2729,
+      "signed": true,
+      "amount": 1362
+    },
+    {
+      "id": 1046,
+      "signed": false,
+      "amount": 3924
+    },
+    {
+      "id": 1045,
+      "signed": false,
+      "amount": 3192
+    },
+    {
+      "id": 1046,
+      "signed": true,
+      "amount": 386
+    }
+  ],
+  "variant": {
+    "rotation": -5.7,
+    "dim": true,
+    "font": "typed"
+  }
+}

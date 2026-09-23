@@ -1,0 +1,17 @@
+{
+  "records": [
+    {
+      "id": 1048,
+      "signed": true,
+      "amount": 4633
+    },
+    {
+      "id": 2124,
+      "signed": true,
+      "amount": 3264
+    }
+  ],
+  "variant": {
+    "font": "marker"
+  }
+}

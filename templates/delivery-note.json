@@ -1,0 +1,59 @@
+{
+  "id": "delivery-note",
+  "name": "Delivery note",
+  "description": "Handwritten delivery note: a table with one row per delivery (order number, amount, signature)",
+  "multi_record": true,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "signed": {
+        "type": "boolean"
+      },
+      "amount": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "id"
+    ]
+  },
+  "fields": {
+    "id": {
+      "hint": "Order number column",
+      "reference": "orders"
+    },
+    "signed": {
+      "hint": "True if that row's signature cell contains a signature or initials, false if it is empty"
+    },
+    "amount": {
+      "hint": "Amount column, in euros, as a plain number (e.g. 1380 or 1380.5)"
+    }
+  },
+  "references": {
+    "orders": [
+      1040,
+      1041,
+      1042,
+      1043,
+      1044,
+      1045,
+      1046,
+      1047,
+      1048,
+      1049,
+      1050,
+      1051,
+      1052,
+      1053,
+      1054,
+      1055,
+      1056,
+      1057,
+      1058,
+      1059
+    ]
+  }
+}
