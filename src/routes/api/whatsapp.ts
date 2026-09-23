@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-// WhatsApp intake (Twilio). Twilio posts each incoming message here as a form; we read the photo with the
-// Digitali engine and answer with TwiML, which Twilio sends back to the sender as a WhatsApp reply.
+// WhatsApp intake (Twilio). Twilio sends each incoming message here (POST form, or GET query when the webhook
+// is set to GET); we read the photo with the Digitali engine and answer with TwiML, which Twilio sends back
+// to the sender as a WhatsApp reply.
 
 type EngineRecord = Record<string, unknown>;
 type EngineResponse = {
@@ -54,56 +55,70 @@ function formatReply(payload: EngineResponse) {
   return text.slice(0, 1550);
 }
 
+const WELCOME =
+  "Karibu! Send me a photo of your attendance sheet and I will send back a clean list. You can add a note with the photo, for example which rows to include.";
+
+type Params = { get(name: string): unknown };
+
+async function downloadMedia(mediaUrl: string) {
+  const sid = process.env["TWILIO_ACCOUNT_SID"];
+  const token = process.env["TWILIO_AUTH_TOKEN"];
+  const headers: Record<string, string> = {};
+  if (sid && token && new URL(mediaUrl).hostname.endsWith("twilio.com")) {
+    headers["Authorization"] = `Basic ${Buffer.from(`${sid}:${token}`).toString("base64")}`;
+  }
+  // Twilio answers the media URL with a redirect to its CDN; follow it without our credentials.
+  let media = await fetch(mediaUrl, { headers, redirect: "manual" });
+  const location = media.headers.get("location");
+  if (media.status >= 300 && media.status < 400 && location) media = await fetch(new URL(location, mediaUrl).toString());
+  if (!media.ok) throw new Error(`media download ${media.status}`);
+  return new Uint8Array(await media.arrayBuffer());
+}
+
+async function handle(params: Params) {
+  const accountSid = process.env["TWILIO_ACCOUNT_SID"];
+  if (accountSid && params.get("AccountSid") !== accountSid) return new Response("Forbidden", { status: 403 });
+
+  const numMedia = Number(params.get("NumMedia") ?? 0);
+  const mediaUrl = params.get("MediaUrl0");
+  const mediaType = String(params.get("MediaContentType0") ?? "");
+  if (!numMedia || typeof mediaUrl !== "string" || !mediaType.startsWith("image/")) return twiml(WELCOME);
+
+  const engineUrl = process.env["ENGINE_URL"];
+  if (!engineUrl) return twiml("The reader is not configured yet. Please try again later.");
+
+  try {
+    const bytes = await downloadMedia(mediaUrl);
+    const body = new FormData();
+    body.append("image", new Blob([bytes], { type: mediaType }), "whatsapp-photo");
+    body.append("template_id", "attendance");
+    const note = String(params.get("Body") ?? "").trim();
+    if (note) body.append("instructions", note.slice(0, 500));
+
+    const headers: Record<string, string> = {};
+    const key = process.env["ENGINE_API_KEY"];
+    if (key) headers["x-api-key"] = key;
+    const response = await fetch(`${engineUrl.replace(/\/$/, "")}/extract`, { method: "POST", headers, body });
+    if (!response.ok) throw new Error(`engine ${response.status}: ${(await response.text()).slice(0, 200)}`);
+    return twiml(formatReply((await response.json()) as EngineResponse));
+  } catch (error) {
+    const reason = error instanceof Error ? error.message : String(error);
+    console.error(`WA-FAIL ${reason}`);
+    return twiml(`Sorry, I could not read that photo. Please try again with the whole sheet in view. (${reason.slice(0, 120)})`);
+  }
+}
+
 export const Route = createFileRoute("/api/whatsapp")({
   server: {
     handlers: {
-      GET: async () => new Response("Digitali WhatsApp webhook is up. Twilio should POST here.", { status: 200 }),
-      POST: async ({ request }) => {
-        const form = await request.formData();
-        const accountSid = process.env["TWILIO_ACCOUNT_SID"];
-        if (accountSid && form.get("AccountSid") !== accountSid) {
-          return new Response("Forbidden", { status: 403 });
+      GET: async ({ request }) => {
+        const query = new URL(request.url).searchParams;
+        if (!query.get("MessageSid") && !query.get("AccountSid")) {
+          return new Response("Digitali WhatsApp webhook is up.", { status: 200 });
         }
-
-        const numMedia = Number(form.get("NumMedia") ?? 0);
-        const mediaUrl = form.get("MediaUrl0");
-        const mediaType = String(form.get("MediaContentType0") ?? "");
-        if (!numMedia || typeof mediaUrl !== "string" || !mediaType.startsWith("image/")) {
-          return twiml(
-            "Karibu! Send me a photo of your attendance sheet and I will send back a clean list. You can add a note with the photo, for example which rows to include.",
-          );
-        }
-
-        const engineUrl = process.env["ENGINE_URL"];
-        if (!engineUrl) return twiml("The reader is not configured yet. Please try again later.");
-
-        try {
-          const headers: Record<string, string> = {};
-          const token = process.env["TWILIO_AUTH_TOKEN"];
-          if (accountSid && token && new URL(mediaUrl).hostname.endsWith("twilio.com")) {
-            headers["Authorization"] = `Basic ${Buffer.from(`${accountSid}:${token}`).toString("base64")}`;
-          }
-          const media = await fetch(mediaUrl, { headers, redirect: "follow" });
-          if (!media.ok) throw new Error(`media ${media.status}`);
-          const bytes = new Uint8Array(await media.arrayBuffer());
-
-          const body = new FormData();
-          body.append("image", new Blob([bytes], { type: mediaType }), "whatsapp-photo");
-          body.append("template_id", "attendance");
-          const note = String(form.get("Body") ?? "").trim();
-          if (note) body.append("instructions", note.slice(0, 500));
-
-          const engineHeaders: Record<string, string> = {};
-          const key = process.env["ENGINE_API_KEY"];
-          if (key) engineHeaders["x-api-key"] = key;
-          const response = await fetch(`${engineUrl.replace(/\/$/, "")}/extract`, { method: "POST", headers: engineHeaders, body });
-          if (!response.ok) throw new Error(`engine ${response.status}: ${(await response.text()).slice(0, 200)}`);
-          return twiml(formatReply((await response.json()) as EngineResponse));
-        } catch (error) {
-          console.error("WhatsApp intake failed", error);
-          return twiml("Sorry, I could not read that photo. Please try again with the whole sheet in view.");
-        }
+        return handle(query);
       },
+      POST: async ({ request }) => handle(await request.formData()),
     },
   },
 });
