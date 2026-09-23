@@ -26,6 +26,7 @@ export function PhotoDemo() {
   const [extractionPrompt, setExtractionPrompt] = useState("");
   const [status, setStatus] = useState<"ready" | "reading" | "review">("ready");
   const [error, setError] = useState<string>();
+  const [source, setSource] = useState<string>();
 
   async function handleFile(file?: File) {
     if (!file) return;
@@ -50,6 +51,7 @@ export function PhotoDemo() {
         },
       });
       setRows(result.records);
+      setSource(result.source);
       setStatus("review");
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "We could not read that photo. Please try again.");
@@ -117,6 +119,7 @@ export function PhotoDemo() {
           </table>
         </div>
         <p className="check-note"><span />We ask you to check anything we couldn't read.</p>
+        {status === "review" && source && <p className="source-note">{source}</p>}
         <Button size="lg" onClick={downloadJson}><Download aria-hidden="true" /> Confirm and download</Button>
       </div>
     </div>

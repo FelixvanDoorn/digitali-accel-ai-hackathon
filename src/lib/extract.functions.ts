@@ -15,13 +15,14 @@ const recordSchema = z.object({
   lowConfidence: z.array(z.enum(["name", "role", "phone", "signed"])),
 });
 
-const resultSchema = z.object({ records: z.array(recordSchema).max(50) });
+const resultSchema = z.object({ records: z.array(recordSchema).max(50), source: z.string().optional() });
 
 export type ExtractedRecord = z.infer<typeof recordSchema>;
 
 type EngineResponse = {
   records?: Array<Record<string, unknown>>;
   flags?: Array<{ record: number; field: string; reason: string }>;
+  meta?: { model?: string; latency_ms?: number };
 };
 
 const FIELDS = ["name", "role", "phone", "signed"] as const;
@@ -65,7 +66,9 @@ async function extractViaEngine(engineUrl: string, data: z.infer<typeof inputSch
       lowConfidence: FIELDS.filter((field) => flagged.has(field)),
     };
   });
-  return resultSchema.parse({ records });
+  const model = payload.meta?.model ?? "unknown model";
+  const seconds = payload.meta?.latency_ms ? ` in ${(payload.meta.latency_ms / 1000).toFixed(1)} s` : "";
+  return resultSchema.parse({ records, source: `Read by the Digitali engine · ${model} on Nebius Token Factory${seconds}` });
 }
 
 export const extractAttendance = createServerFn({ method: "POST" })
@@ -155,5 +158,5 @@ export const extractAttendance = createServerFn({ method: "POST" })
     const payload = (await response.json()) as { choices?: Array<{ message?: { content?: string } }> };
     const content = payload.choices?.[0]?.message?.content;
     if (!content) throw new Error("The photo reader returned no records.");
-    return resultSchema.parse(JSON.parse(content));
+    return resultSchema.parse({ ...JSON.parse(content), source: "Read directly by Qwen2.5-VL-72B on Nebius Token Factory" });
   });
