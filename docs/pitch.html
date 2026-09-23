@@ -123,7 +123,7 @@ aside.notes{display:none}
       <h1 class="big" style="margin-top:56px;font-size:68px">Less admin.<br>More impact.</h1>
       <p class="sub" style="font-size:22px;color:var(--muted);margin-top:40px">Accel AI Hackathon · Nebius Token Factory</p>
     </div>
-    <div class="photo-pad"><div class="photo arch" data-img="group" data-pos="center 30%"></div></div>
+    <div class="photo-pad"><div class="photo arch" data-img="group" data-pos="30% center"></div></div>
   </div>
   <aside class="notes">One line: Digitali gives field organisations their time back and their data forward. Then go straight to Asha.</aside>
 </section>
@@ -136,7 +136,7 @@ aside.notes{display:none}
       <h2 class="big">Meet Asha.</h2>
       <p class="sub">Field officer in western Kenya.<br>She supports 12 community groups.</p>
     </div>
-    <div class="photo" data-img="portrait" data-pos="center 35%"></div>
+    <div class="photo" data-img="portrait" data-pos="center 25%"></div>
   </div>
   <aside class="notes">Asha is a persona based on field officers at microfinance institutions, cooperatives and NGOs. She visits groups, runs meetings and records everything on paper.</aside>
 </section>
@@ -149,10 +149,7 @@ aside.notes{display:none}
       <h2 class="big">Every meeting ends on paper.</h2>
       <p class="sub">Attendance, savings, loans, visits.<br>Signed, stamped, filed.</p>
     </div>
-    <div style="display:grid;grid-template-rows:1fr 1fr">
-      <div class="photo" data-img="meeting" data-pos="center 45%"></div>
-      <div class="photo" style="background-image:url('/images/sample-sheet.jpg');background-position:center 22%"></div>
-    </div>
+    <div class="photo" data-img="meeting" data-pos="center 60%"></div>
   </div>
   <aside class="notes">The paper works in the field. No battery, no signal, everyone can sign. The problem starts after the meeting.</aside>
 </section>
@@ -195,7 +192,7 @@ aside.notes{display:none}
       <h2 class="big">Asha takes a photo. That's it.</h2>
       <p class="sub">Digitali turns it into clean, structured data.<br>She checks it and moves on.</p>
     </div>
-    <div class="photo" data-img="phone" data-pos="center"></div>
+    <div class="photo" data-img="phone" data-pos="40% center"></div>
   </div>
   <aside class="notes">No new app, no new form, no training. She keeps the paper she already uses and sends a photo, today by web upload, next over WhatsApp.</aside>
 </section>
@@ -287,7 +284,7 @@ aside.notes{display:none}
       <h2 class="big">The model proposes. Asha confirms.</h2>
       <p class="sub">No photos stored. Unclear fields flagged.<br>Nothing saved without a person.</p>
     </div>
-    <div class="photo" data-img="portrait" data-pos="30% 30%"></div>
+    <div class="photo" data-img="portrait" data-pos="center 25%"></div>
   </div>
   <aside class="notes">Text in the photo is treated as data, never as instructions. The output must match the template's schema. Photos are processed in memory and dropped; metadata such as GPS is stripped.</aside>
 </section>
@@ -305,27 +302,28 @@ aside.notes{display:none}
         <div><div class="avatar" style="width:80px;height:100px;font-size:38px">E</div><h3 style="font-size:28px">Elif</h3><p style="font-size:16px">Frontend and brand</p></div>
       </div>
     </div>
-    <div class="photo-pad"><div class="photo arch" data-img="meeting" data-pos="center 45%"></div></div>
+    <div class="photo-pad"><div class="photo arch" data-img="walk" data-pos="40% center"></div></div>
   </div>
   <aside class="notes">Market: microfinance, cooperatives, NGOs and public services with many field staff. Close with: less admin, more impact. Asante.</aside>
 </section>
 
 </div></div>
-<div class="credit" id="credit">Photos: Unsplash (Favour Anyula, Ahadi Lugo, Random Institute, Wonderlane, Sear Greyson, Akshar Dave)</div>
+<div class="credit" id="credit">Field scenes: AI generated. Office and files: Unsplash (Wonderlane, Sear Greyson)</div>
 <div id="notes"></div>
 <div id="nav"><button onclick="location.href='/'" aria-label="Home" title="Home">⌂</button><button id="prev" aria-label="Previous">‹</button><button id="next" aria-label="Next">›</button></div>
 <script>
 (function(){
   var IMG={
-    portrait:'https://images.unsplash.com/photo-1633591640507-aeb0fab6a7bc',
-    meeting:'https://images.unsplash.com/photo-1779357807569-18d3df9df645',
+    portrait:'/images/asha-portrait.jpg',
+    group:'/images/group-circle.jpg',
+    meeting:'/images/savings-ledger.jpg',
+    phone:'/images/photo-sheet.jpg',
+    walk:'/images/field-walk.jpg',
     night:'https://images.unsplash.com/photo-1566699270403-3f7e3f340664',
-    register:'https://images.unsplash.com/photo-1526656001029-20a71b17f7ba',
-    phone:'https://images.unsplash.com/photo-1648279220423-14606cb98f22',
-    group:'https://images.unsplash.com/photo-1593114638431-5805138c696e'
+    register:'https://images.unsplash.com/photo-1526656001029-20a71b17f7ba'
   };
   document.querySelectorAll('[data-img]').forEach(function(el){
-    el.style.backgroundImage="url('"+IMG[el.getAttribute('data-img')]+"?w=1400&q=80&auto=format&fit=crop')";
+    var u=IMG[el.getAttribute('data-img')];el.style.backgroundImage="url('"+(u.indexOf('http')===0?u+"?w=1400&q=80&auto=format&fit=crop":u)+"')";
     if(el.getAttribute('data-pos')) el.style.backgroundPosition=el.getAttribute('data-pos');
   });
   var dropSvg='<svg viewBox="0 0 100 140"><use href="#drop"/></svg>';

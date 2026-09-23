@@ -307,10 +307,13 @@ footer { padding: 70px max(20px, calc((100vw - 1280px) / 2)); background: var(--
 .arch-photo figcaption { font-family: var(--font-display); font-size: 24px; line-height: 1.25; color: var(--mkaa); }
 .user { display: grid; grid-template-columns: minmax(280px, .7fr) 1fr; gap: clamp(40px, 7vw, 100px); align-items: center; border-top: 1px solid var(--hairline); }
 .user .arch-img { max-height: 620px; }
+.field-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; padding-bottom: clamp(60px, 8vw, 110px); }
+.field-strip figcaption { font-size: 19px; }
 .credits { grid-column: 1 / -1; font-size: 12px; opacity: .7; }
 
 @media (max-width: 800px) {
   .user { grid-template-columns: 1fr; }
+  .field-strip { grid-template-columns: 1fr 1fr; }
   .page-wrap { width: min(100% - 32px, 650px); }
   .menu-button { display: inline-flex; }
   .nav-links { position: absolute; top: 76px; left: 0; right: 0; display: none; padding: 20px; background: var(--chokaa); border-bottom: 1px solid var(--hairline); flex-direction: column; align-items: stretch; gap: 12px; }

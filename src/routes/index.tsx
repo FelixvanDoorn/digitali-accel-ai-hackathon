@@ -40,9 +40,9 @@ function KangaSaying({ children, translation }: { children: string; translation:
 }
 
 const IMG = {
-  portrait: "https://images.unsplash.com/photo-1633591640507-aeb0fab6a7bc",
-  group: "https://images.unsplash.com/photo-1593114638431-5805138c696e",
-  meeting: "https://images.unsplash.com/photo-1779357807569-18d3df9df645",
+  portrait: "/images/asha-portrait.jpg",
+  group: "/images/group-circle.jpg",
+  meeting: "/images/savings-ledger.jpg",
   night: "https://images.unsplash.com/photo-1566699270403-3f7e3f340664",
   register: "https://images.unsplash.com/photo-1526656001029-20a71b17f7ba",
 };
@@ -108,6 +108,17 @@ function Index() {
         </div>
       </section>
 
+      <section className="field-strip page-wrap" aria-label="A day in the field">
+        {[
+          ["/images/field-walk.jpg", "Walking between villages"],
+          ["/images/home-visit.jpg", "Home visits"],
+          ["/images/water-point.jpg", "Project check-ins"],
+          ["/images/photo-sheet.jpg", "One photo of the sheet"],
+        ].map(([src, caption]) => (
+          <ArchPhoto key={src} compact src={src} alt={caption} caption={caption} />
+        ))}
+      </section>
+
       <section id="whatsapp" className="whatsapp section page-wrap">
         <div className="section-heading"><div><p className="eyebrow">On WhatsApp</p><h2>Send the photo the way you already do.</h2></div><p>A preview of the WhatsApp flow, shown here on the page. The names and numbers are made up for testing.</p></div>
         <WhatsAppDemo replay={replay} />
@@ -171,7 +182,7 @@ function Index() {
         <p className="pitch-note">The full deck is one click away: <a className="text-link" href="/pitch-deck/index.html">open the pitch deck <ArrowRight /></a></p>
       </section>
 
-      <footer><div className="footer-inner"><div className="footer-brand"><BrandLockup inverse /><p>Kutoka karatasi hadi data<br/><span>From paper to data</span></p></div><div className="footer-links"><a href="#how">How it works</a><a href="#who">Who it's for</a><a href="#pricing">Pricing</a><a href="/pitch-deck/index.html">Pitch deck</a><a href="#demo">Try it</a></div><p className="asante">Asante.</p><p className="credits">Photos: Unsplash (Favour Anyula, Ahadi Lugo, Random Institute, Wonderlane, Sear Greyson). Asha is a persona.</p></div></footer>
+      <footer><div className="footer-inner"><div className="footer-brand"><BrandLockup inverse /><p>Kutoka karatasi hadi data<br/><span>From paper to data</span></p></div><div className="footer-links"><a href="#how">How it works</a><a href="#who">Who it's for</a><a href="#pricing">Pricing</a><a href="/pitch-deck/index.html">Pitch deck</a><a href="#demo">Try it</a></div><p className="asante">Asante.</p><p className="credits">Field scenes are AI generated; office photos from Unsplash (Wonderlane, Sear Greyson). Asha is a persona.</p></div></footer>
     </main>
   );
 }
