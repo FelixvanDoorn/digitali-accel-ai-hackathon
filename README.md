@@ -1,16 +1,16 @@
 # Digitali
 
-Digitali turns the paper a microfinance loan officer already fills in into structured data, from a single photo.
+Digitali turns analogue operations into structured data, from a single photo.
 
-Loan officers record group meetings on paper resolution sheets: who attended, who signed, who paid how much. Branch staff retype these into the core banking system by hand, which is slow, error prone and days late. With Digitali, the officer photographs the sheet, a vision model on Nebius Token Factory reads it and matches each row to a group member, and the result comes back as clean JSON ready to write against the member and the meeting date.
+Companies with large paper based operations want data driven decisions but struggle with data input and collection: forms, sheets and logs get retyped by hand, late and with errors. With Digitali, staff keep the paper they already use and send a photo. A vision model on Nebius Token Factory reads it, maps it to the company's own schema, and returns clean JSON ready for their system.
 
 ## How it works
 
-1. **Input:** a photo of the sheet (web upload for the MVP, WhatsApp later).
-2. **Engine:** an open vision model on Nebius Token Factory, prompted with the group's member list and the exact output format.
-3. **Output:** one record per member, for example `{"member_id": 1042, "signed": true, "paid": 1380}`.
+1. **Input:** a photo of any paper form, sheet or log (web upload for the MVP, messaging apps later).
+2. **Engine:** an open vision model on Nebius Token Factory, prompted with the company's template, reference data and the exact output format.
+3. **Output:** validated JSON per record, for example `{"id": 1042, "signed": true, "amount": 1380}`.
 
-MFIs can use Digitali in two ways: call the engine from their own system (API in, JSON out), or use our web page to upload, review, correct and export.
+Companies can use Digitali in two ways: call the engine from their own system (API in, JSON out), or use our web page to upload, review, correct and export.
 
 ## Repo
 
