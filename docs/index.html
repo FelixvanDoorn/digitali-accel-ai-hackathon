@@ -151,7 +151,7 @@ aside.notes{display:none}
         <tr><td><span class="tbd">text model (optional)</span></td><td>Matching and validation</td><td>Matches names to reference IDs and checks totals.</td></tr>
       </tbody>
     </table>
-    <p class="lead" style="font-size:24px;margin-top:36px">All models run on Token Factory through its OpenAI compatible API. No closed models used.</p>
+    <p class="lead" style="font-size:24px;margin-top:36px">All production models run on Token Factory through its OpenAI compatible API. A closed model is used only as the eval baseline, via Vercel AI Gateway.</p>
   </div>
   <aside class="notes">Name exact model IDs once confirmed with the /v1/models call. Explain why two models: cost on the common case, quality on the hard case.</aside>
 </section>
@@ -159,18 +159,19 @@ aside.notes{display:none}
 <!-- 7 MEASUREMENT -->
 <section class="slide" data-crit="Measurable model advantage">
   <div class="kicker">Measurable advantage</div>
-  <h2>Small vs large open model, on the same test set.</h2>
+  <h2>Open models on Nebius vs a closed model, on the same test set.</h2>
   <div class="body">
     <table>
       <thead><tr><th>Model</th><th>Field accuracy</th><th>Cost per page</th><th>Latency</th></tr></thead>
       <tbody>
         <tr class="win"><td><span class="tbd">small</span></td><td class="num"><span class="tbd">%</span></td><td class="num"><span class="tbd">$</span></td><td class="num"><span class="tbd">s</span></td></tr>
         <tr><td><span class="tbd">large</span></td><td class="num"><span class="tbd">%</span></td><td class="num"><span class="tbd">$</span></td><td class="num"><span class="tbd">s</span></td></tr>
+        <tr><td><span class="tbd">closed baseline</span></td><td class="num"><span class="tbd">%</span></td><td class="num"><span class="tbd">$</span></td><td class="num"><span class="tbd">s</span></td></tr>
       </tbody>
     </table>
     <p class="lead" style="font-size:24px;margin-top:36px">Test set: 20 synthetic sheets with ground truth, plus 5 filled in by hand and photographed on a phone. Field accuracy = share of fields exactly right. Eval sheet: <span class="tbd">repo link</span></p>
   </div>
-  <aside class="notes">A rough measurement with real numbers beats a polished claim. Say the headline: X percent of the accuracy at Y times lower cost.</aside>
+  <aside class="notes">A rough measurement with real numbers beats a polished claim. Say the headline: the small open model reaches X percent of the closed model accuracy at Y times lower cost.</aside>
 </section>
 
 <!-- 8 RESPONSIBLE -->
