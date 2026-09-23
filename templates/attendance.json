@@ -1,0 +1,40 @@
+{
+  "id": "attendance",
+  "name": "Attendance sheet",
+  "description": "Handwritten meeting attendance sheet: one row per person (name, role, phone number, signature)",
+  "multi_record": true,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "role": {
+        "type": "string"
+      },
+      "phone": {
+        "type": "string"
+      },
+      "signed": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "name"
+    ]
+  },
+  "fields": {
+    "name": {
+      "hint": "The person's full name as written"
+    },
+    "role": {
+      "hint": "Their role in the group, e.g. Chair, Treasurer, Secretary or Member"
+    },
+    "phone": {
+      "hint": "Phone number exactly as written, keeping leading zeros and spaces (e.g. 0712 440 983)"
+    },
+    "signed": {
+      "hint": "True only if that row's signature cell has a signature or clear mark, false if it is empty"
+    }
+  }
+}

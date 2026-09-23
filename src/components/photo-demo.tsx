@@ -10,13 +10,21 @@ const starterRows: ExtractedRecord[] = [
   { name: "Fatma Said", role: "Secretary", phone: "0741 602 457", signed: true, lowConfidence: [] },
 ];
 
-function fileToDataUrl(file: File) {
-  return new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => typeof reader.result === "string" ? resolve(reader.result) : reject(new Error("Could not read photo."));
-    reader.onerror = () => reject(new Error("Could not read photo."));
-    reader.readAsDataURL(file);
+const MAX_EDGE = 2000;
+
+// Shrinks the photo to at most 2000 px on the long edge (what the engine uses anyway) and re-encodes it as
+// JPEG. Keeps uploads to a few hundred KB, well under Vercel's request size limit.
+async function shrinkPhoto(file: File) {
+  const bitmap = await createImageBitmap(file).catch(() => {
+    throw new Error("Could not read photo.");
   });
+  const scale = Math.min(1, MAX_EDGE / Math.max(bitmap.width, bitmap.height));
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.round(bitmap.width * scale);
+  canvas.height = Math.round(bitmap.height * scale);
+  canvas.getContext("2d")?.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  bitmap.close();
+  return canvas.toDataURL("image/jpeg", 0.85);
 }
 
 export function PhotoDemo() {
@@ -33,19 +41,19 @@ export function PhotoDemo() {
       setError("Please choose a JPG, PNG or WebP photo.");
       return;
     }
-    if (file.size > 7_000_000) {
-      setError("Please choose a photo smaller than 7 MB.");
+    if (file.size > 20_000_000) {
+      setError("Please choose a photo smaller than 20 MB.");
       return;
     }
     setError(undefined);
     setStatus("reading");
-    const dataUrl = await fileToDataUrl(file);
-    setPreview(dataUrl);
     try {
+      const dataUrl = await shrinkPhoto(file);
+      setPreview(dataUrl);
       const result = await extractAttendance({
         data: {
           dataUrl,
-          mimeType: file.type as "image/jpeg" | "image/png" | "image/webp",
+          mimeType: "image/jpeg",
           prompt: extractionPrompt.trim() || undefined,
         },
       });
@@ -89,7 +97,7 @@ export function PhotoDemo() {
           <textarea
             value={extractionPrompt}
             onChange={(event) => setExtractionPrompt(event.target.value)}
-            placeholder="tell us what data you want extracted"
+            placeholder="tell us what data you want to extract"
             maxLength={500}
             rows={3}
             disabled={status === "reading"}
@@ -99,7 +107,7 @@ export function PhotoDemo() {
         <Button variant="outline" size="lg" onClick={() => inputRef.current?.click()} disabled={status === "reading"}>
           <Upload aria-hidden="true" /> {status === "reading" ? "Reading your photo…" : "Choose a photo"}
         </Button>
-        <p>JPG, PNG or WebP · up to 7 MB</p>
+        <p>JPG, PNG or WebP · up to 20 MB</p>
       </div>
       <div className="demo-result" aria-live="polite">
         <div className="demo-heading">
