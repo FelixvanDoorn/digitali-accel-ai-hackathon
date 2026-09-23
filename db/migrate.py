@@ -41,6 +41,9 @@ def main() -> None:
                 conn.execute(path.read_text())
                 conn.execute("insert into schema_migrations (name) values (%s)", (path.name,))
             print(f"Applied {path.name}")
+        if pending:
+            # Supabase's API caches the schema; without this, new functions return 404 for a while.
+            conn.execute("notify pgrst, 'reload schema'")
 
 
 if __name__ == "__main__":
